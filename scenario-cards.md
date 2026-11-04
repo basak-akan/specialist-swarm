@@ -56,7 +56,12 @@ Each team picks ONE scenario. Each is shaped like real services-firm work: a coo
 
 **The trigger:** A synthetic new-hire-profile.md
 
-**The deliverable:** A day-1 readiness pack in docx
+**The deliverable:** A Hogwarts-themed day-1 readiness pack as a single self-contained HTML file at `outputs/day-1-readiness-pack.html`
+- Styled like an enchanted staff-room parchment: aged-paper background, quill-and-ink serif typography, wax-seal headings, House-colour accents (scarlet, emerald, sapphire, gold)
+- Opens with a "Blockers before Monday" section, then one scroll per specialist (Recruiter, Provisioning, Buddy, Welcome)
+- Inline CSS only, no external assets, so it opens anywhere; confidential items (accommodation, Animagus status) stay out of the shareable sections
+
+**How to run:** `python setup_environment.py` (once), then `python create_onboarding_swarm.py` and `python run_onboarding.py`. These are separate from Card A's scripts and state files; each specialist holds its own reference library, so only the intake is sent.
 
 ---
 

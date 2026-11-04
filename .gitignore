@@ -3,6 +3,7 @@
 .state.json
 .*_id
 .*_ids.json
+.onboarding_agents.json
 .last_session_id
 runs/
 outputs/
