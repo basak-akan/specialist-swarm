@@ -17,8 +17,10 @@ You need a workspace API key on the Console (multi-agent is currently in researc
 
 ```bash
 cd 03-specialist-swarm
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export ANTHROPIC_API_KEY="sk-ant-..."
+python setup_environment.py   # one-time: creates the cloud environment, saves .environment_id
 ```
 
 ## Pick a scenario card
