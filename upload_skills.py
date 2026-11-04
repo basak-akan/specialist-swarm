@@ -43,7 +43,7 @@ def main() -> None:
     print("Checking for existing skills...")
     existing_by_title: dict[str, str] = {}
     for page in client.beta.skills.list(source="custom"):
-        existing_by_title[page.display_title] = page.id
+        existing_by_title[page.display_name] = page.id
 
     uploaded: dict[str, str] = {}
 
@@ -63,7 +63,7 @@ def main() -> None:
         else:
             print(f"Uploading skill: {skill_name}...")
             skill = client.beta.skills.create(
-                display_title=display_title,
+                display_name=display_title,
                 files=files_from_dir(str(skill_dir)),
             )
             uploaded[skill_name] = skill.id

@@ -1,0 +1,736 @@
+<title>Hogwarts Onboarding Swarm</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap">
+<style>
+/* Layout concept: a candlelit Great Hall at night. A 16:9 stage sized in container
+   units; parchment "documents" sit on the dark hall; the four House colours mark the
+   four lanes everywhere they appear. Under 760px the stage becomes a vertical scroll. */
+:root {
+  /* Color */
+  --night: #0a0f1f;          /* the hall, navy-biased */
+  --night-raised: #131b34;   /* raised surfaces */
+  --candle: #f0b85a;         /* the one accent: candlelight */
+  --parchment: #ecdcb0;      /* documents */
+  --ink: #2a1b0c;            /* ink on parchment */
+  --text: #f2ead6;           /* warm white on the hall */
+  --mist: #a9b3cf;           /* secondary text, blue-biased */
+  --line: #2a3459;           /* hairlines on the hall */
+  --raven: #7f9bf2;          /* Recruiter */
+  --huff: #e8c93a;           /* Provisioning */
+  --gryff: #ee6f64;          /* Buddy Match */
+  --slyth: #52c08b;          /* Welcome Packet */
+  --ok: #67d2c2;             /* semantic: in time */
+  --bad: #f0806f;            /* semantic: late */
+
+  /* Type */
+  --display: 'IM Fell English', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --label: 'IM Fell English SC', 'Iowan Old Style', Georgia, serif;
+  --body: 'Alegreya Sans', 'Gill Sans', 'Segoe UI', Roboto, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  --u: 1cqw;                 /* one unit = 1% of the stage width */
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+}
+
+.viewport {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  container-type: size;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.stage {
+  position: relative;
+  width: min(100cqw, calc(100cqh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  container-type: size;
+  overflow: hidden;
+  background:
+    radial-gradient(1px 1px at 8% 14%, rgba(242,234,214,.9) 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 21% 7%, rgba(242,234,214,.8) 50%, transparent 52%),
+    radial-gradient(1px 1px at 34% 19%, rgba(242,234,214,.6) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 47% 6%, rgba(242,234,214,.9) 50%, transparent 52%),
+    radial-gradient(1px 1px at 59% 16%, rgba(242,234,214,.6) 50%, transparent 52%),
+    radial-gradient(1.5px 1.5px at 71% 9%, rgba(242,234,214,.85) 50%, transparent 52%),
+    radial-gradient(1px 1px at 83% 18%, rgba(242,234,214,.6) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 93% 8%, rgba(242,234,214,.8) 50%, transparent 52%),
+    radial-gradient(1px 1px at 14% 31%, rgba(242,234,214,.45) 50%, transparent 52%),
+    radial-gradient(1px 1px at 64% 29%, rgba(242,234,214,.45) 50%, transparent 52%),
+    radial-gradient(1px 1px at 90% 34%, rgba(242,234,214,.4) 50%, transparent 52%),
+    radial-gradient(90% 60% at 50% -12%, rgba(240,184,90,.16), transparent 70%),
+    radial-gradient(120% 80% at 50% 0%, #16204a 0%, transparent 62%),
+    var(--night);
+}
+
+/* ---------- slides ---------- */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 1.6);
+  padding: calc(var(--u) * 4.6) calc(var(--u) * 6) calc(var(--u) * 7.4);
+}
+.js .slide { display: none; }
+.js .slide.is-active { display: flex; }
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--label);
+  font-size: calc(var(--u) * 1.3);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--candle);
+}
+.title {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: calc(var(--u) * 3.7);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.lede {
+  margin: 0;
+  max-width: 62ch;
+  font-size: calc(var(--u) * 1.6);
+  line-height: 1.42;
+  color: var(--mist);
+}
+.small { font-size: calc(var(--u) * 1.2); color: var(--mist); line-height: 1.4; }
+.mono { font-family: var(--mono); font-size: .92em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- crests and pips ---------- */
+.crest { width: calc(var(--u) * 3.2); height: calc(var(--u) * 3.5); flex: none; }
+.crest .letter { font-family: var(--display); font-size: 13px; fill: var(--night); }
+.pip { width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.62); flex: none; }
+.lanes { display: inline-flex; align-items: center; gap: calc(var(--u) * .5); flex-wrap: nowrap; white-space: nowrap;
+  font-family: var(--label); font-size: calc(var(--u) * 1.02); letter-spacing: .06em; text-transform: uppercase; color: var(--mist); }
+.lanes .sep { color: var(--line); }
+
+/* ---------- title slide ---------- */
+.title-slide { justify-content: flex-end; padding-bottom: calc(var(--u) * 9); }
+.display {
+  margin: 0;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: calc(var(--u) * 7.4);
+  line-height: .98;
+  letter-spacing: -.01em;
+}
+.title-slide .lede { max-width: 56ch; font-size: calc(var(--u) * 1.75); color: var(--text); opacity: .86; }
+.candles { position: absolute; inset: 0 0 auto 0; height: 40%; pointer-events: none; }
+.candles i {
+  position: absolute; top: var(--top); left: var(--x);
+  width: calc(var(--u) * .95); height: var(--h);
+  background: linear-gradient(90deg, #cdbb90, #f6ecd0 45%, #d9c9a0);
+  border-radius: 2px 2px 0 0;
+}
+.candles i::before {   /* flame */
+  content: ""; position: absolute; left: 50%; bottom: 100%; width: calc(var(--u) * .7); height: calc(var(--u) * 1.5);
+  transform: translateX(-50%); border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(ellipse at 50% 72%, #fff6d8 0 18%, #ffd37a 38%, rgba(240,184,90,0) 72%);
+  box-shadow: 0 0 calc(var(--u) * 2.6) calc(var(--u) * .9) rgba(240,184,90,.34);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .candles i { animation: bob 6s ease-in-out infinite; animation-delay: var(--d); }
+  .candles i::before { animation: flicker 2.4s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes bob { 50% { transform: translateY(calc(var(--u) * .5)); } }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 45% { opacity: .82; } 70% { opacity: .95; } }
+}
+
+/* ---------- problem slide ---------- */
+.collisions { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * 3); margin: calc(var(--u) * .8) 0 0; padding: 0; list-style: none; }
+.collisions li { display: grid; gap: calc(var(--u) * .6); align-content: start; padding-top: calc(var(--u) * 1.3); border-top: 1px solid var(--line); }
+.collisions h3 { margin: 0; font-family: var(--display); font-style: italic; font-weight: 400; font-size: calc(var(--u) * 2.5); }
+.collisions p { margin: 0; font-size: calc(var(--u) * 1.6); line-height: 1.42; color: var(--text); opacity: .86; }
+
+/* ---------- figures ---------- */
+figure { margin: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: calc(var(--u) * 1); flex: 1; min-height: 0; }
+figure svg { width: 100%; height: 100%; min-height: 0; display: block; color: var(--text); }
+figcaption { font-size: calc(var(--u) * 1.25); line-height: 1.4; color: var(--mist); max-width: 120ch; }
+svg text { font-family: var(--body); fill: currentColor; }
+svg .m { font-family: var(--mono); }
+svg .sub { fill: var(--mist); }
+svg .ink { fill: var(--ink); }
+svg .fill-doc { fill: var(--parchment); stroke: #8d7440; stroke-width: 1.2; }
+svg .fill-box { fill: var(--night-raised); stroke-width: 1.6; }
+
+/* ---------- documents ---------- */
+.doc {
+  background: var(--parchment); color: var(--ink);
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.4);
+  box-shadow: 0 calc(var(--u) * 1) calc(var(--u) * 3) rgba(0,0,0,.45), inset 0 0 calc(var(--u) * 4) rgba(120,84,30,.22);
+  border: 1px solid #b79c62;
+}
+.doc h3 { margin: 0 0 calc(var(--u) * .5); font-family: var(--label); font-size: calc(var(--u) * 1.3); letter-spacing: .1em; text-transform: uppercase; color: #6b3d12; }
+.doc dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: calc(var(--u) * .5) calc(var(--u) * 1.4); font-size: calc(var(--u) * 1.4); line-height: 1.3; }
+.doc dt { font-family: var(--label); letter-spacing: .06em; color: #6b3d12; }
+.doc dd { margin: 0; }
+.redact { display: inline-block; width: 11ch; height: .95em; vertical-align: -.1em; background: var(--ink); border-radius: 1px; }
+
+/* ---------- slide: what the swarm receives ---------- */
+.split { display: grid; grid-template-columns: 1.15fr 1fr; gap: calc(var(--u) * 4); align-items: start; }
+.files { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * 1.15); }
+.files li { display: grid; grid-template-columns: auto 1fr; gap: 0 calc(var(--u) * .9); align-items: center; }
+.files .name { font-family: var(--mono); font-size: calc(var(--u) * 1.3); }
+.files .role { grid-column: 2; font-size: calc(var(--u) * 1.25); color: var(--mist); }
+
+/* ---------- slide: four lanes ---------- */
+.four { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--u) * 2); margin-top: calc(var(--u) * .4); }
+.lane { display: grid; gap: calc(var(--u) * .9); align-content: start; padding-top: calc(var(--u) * 1.3); border-top: 3px solid var(--c); }
+.lane h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: calc(var(--u) * 2.1); display: flex; align-items: center; gap: calc(var(--u) * .8); }
+.lane .q { margin: 0; font-style: italic; font-size: calc(var(--u) * 1.7); line-height: 1.25; font-family: var(--display); color: var(--text); }
+.lane .own { margin: 0; font-size: calc(var(--u) * 1.4); line-height: 1.42; color: var(--text); opacity: .88; }
+.lane .reply { margin: 0; font-size: calc(var(--u) * 1.3); line-height: 1.4; color: var(--mist); }
+.lane .reply span { display: block; margin-bottom: calc(var(--u) * .25); font-family: var(--label); font-size: calc(var(--u) * 1.05); letter-spacing: .12em; text-transform: uppercase; color: var(--c); }
+.lane .lib { margin: 0; font-family: var(--mono); font-size: calc(var(--u) * 1.08); color: var(--mist); overflow-wrap: anywhere; }
+.models { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2.4); margin-top: auto; }
+
+/* ---------- slide: buddy match ---------- */
+.match { display: grid; grid-template-columns: 1fr 1.05fr; gap: calc(var(--u) * 4.5); align-items: start; margin-top: calc(var(--u) * .4); }
+.match h3 { margin: 0 0 calc(var(--u) * .9); font-family: var(--label); font-size: calc(var(--u) * 1.2); letter-spacing: .12em; text-transform: uppercase; color: var(--mist); }
+.out, .in { margin: 0; padding: 0; list-style: none; }
+.out li { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1); padding: calc(var(--u) * .5) 0; border-bottom: 1px solid var(--line); font-size: calc(var(--u) * 1.3); line-height: 1.25; }
+.out .who { color: var(--text); opacity: .78; text-decoration: line-through; text-decoration-color: rgba(238,111,100,.7); text-decoration-thickness: 1px; }
+.out .why { color: var(--mist); }
+.in li { display: grid; grid-template-columns: calc(var(--u) * 3.2) 1fr; gap: calc(var(--u) * .4) calc(var(--u) * 1); align-items: baseline; padding: calc(var(--u) * .9) 0; border-bottom: 1px solid var(--line); }
+.in .rank { font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 3); line-height: 1; color: var(--candle); font-variant-numeric: tabular-nums; }
+.in .who { font-family: var(--display); font-size: calc(var(--u) * 2); }
+.in .tag { margin-left: calc(var(--u) * .8); font-family: var(--label); font-size: calc(var(--u) * 1.1); letter-spacing: .12em; color: var(--night); background: var(--candle); padding: .12em .5em; vertical-align: .18em; }
+.in .stat { grid-column: 2; font-size: calc(var(--u) * 1.25); color: var(--mist); font-variant-numeric: tabular-nums; }
+.rule { margin-top: calc(var(--u) * 1.6); }
+
+/* ---------- slide: the pack ---------- */
+.pack-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: calc(var(--u) * 4.5); align-items: start; margin-top: calc(var(--u) * .4); }
+.pack { display: grid; gap: calc(var(--u) * .8); font-size: calc(var(--u) * 1.1); padding: calc(var(--u) * 1.4) calc(var(--u) * 2); }
+.pack header { display: flex; justify-content: space-between; align-items: center; gap: calc(var(--u) * 1.5); border-bottom: 2px double #8d7440; padding-bottom: calc(var(--u) * .9); }
+.pack .school { font-family: var(--label); letter-spacing: .12em; text-transform: uppercase; color: #6b3d12; font-size: calc(var(--u) * .95); }
+.pack .pt { font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 2.1); line-height: 1.05; }
+.seal { width: calc(var(--u) * 4.6); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; text-align: center; flex: none;
+  background: radial-gradient(circle at 35% 30%, #cf4a3a, #7a1a14 70%); color: #f6e7d0;
+  box-shadow: inset 0 0 0 calc(var(--u) * .28) rgba(0,0,0,.18), inset 0 0 0 calc(var(--u) * .5) rgba(255,255,255,.08), 0 calc(var(--u) * .3) calc(var(--u) * .8) rgba(0,0,0,.35);
+  font-family: var(--label); font-size: calc(var(--u) * .95); letter-spacing: .08em; line-height: 1.1; }
+.pack h4 { margin: 0; font-family: var(--label); font-size: calc(var(--u) * 1.05); letter-spacing: .12em; text-transform: uppercase; color: #6b3d12; }
+.pack .bl { display: grid; gap: calc(var(--u) * .35); }
+.pack .bl span { display: block; height: calc(var(--u) * .55); background: rgba(42,27,12,.22); border-radius: 1px; }
+.pack .bl span:nth-child(2) { width: 82%; } .pack .bl span:nth-child(3) { width: 64%; }
+.cup { display: grid; gap: calc(var(--u) * .45); }
+.cup div { display: grid; grid-template-columns: calc(var(--u) * 9) 1fr; gap: calc(var(--u) * .8); align-items: center; }
+.cup .bar { height: calc(var(--u) * .85); background: rgba(42,27,12,.14); position: relative; }
+.cup .bar::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--c); }
+.scrolls { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * .6) calc(var(--u) * 1.2); }
+.scrolls div { display: flex; align-items: center; gap: calc(var(--u) * .6); padding: calc(var(--u) * .5) calc(var(--u) * .7); border-left: calc(var(--u) * .3) solid var(--c); background: rgba(42,27,12,.07); }
+.scrolls b { font-weight: 500; }
+.scrolls em { margin-left: auto; font-style: normal; font-family: var(--label); font-size: calc(var(--u) * .8); letter-spacing: .06em; color: #6b3d12; }
+.pack footer { text-align: center; font-family: var(--display); font-style: italic; color: #6b3d12; border-top: 2px double #8d7440; padding-top: calc(var(--u) * .7); }
+.ann { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * 1.3); }
+.ann li { padding-top: calc(var(--u) * 1); border-top: 1px solid var(--line); }
+.ann b { display: block; font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 1.9); }
+.ann span { font-size: calc(var(--u) * 1.35); line-height: 1.35; color: var(--mist); }
+.ann .note { font-size: calc(var(--u) * 1.2); }
+
+/* ---------- slide: decisions ---------- */
+.decisions { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.6) calc(var(--u) * 4); margin: calc(var(--u) * .6) 0 0; padding: 0; list-style: none; }
+.decisions li { padding-top: calc(var(--u) * 1.1); border-top: 1px solid var(--line); display: grid; gap: calc(var(--u) * .4); }
+.decisions h3 { margin: 0; font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 2); }
+.decisions p { margin: 0; font-size: calc(var(--u) * 1.35); line-height: 1.38; color: var(--text); opacity: .84; }
+
+/* ---------- slide: demo ---------- */
+.demo { display: grid; grid-template-columns: 1.35fr 1fr; gap: calc(var(--u) * 4); align-items: start; margin-top: calc(var(--u) * .4); }
+.term { background: #060a16; border: 1px solid var(--line); padding: calc(var(--u) * 1.6) calc(var(--u) * 2); font-family: var(--mono); font-size: calc(var(--u) * 1.22); line-height: 1.6; box-shadow: 0 calc(var(--u) * 1) calc(var(--u) * 3) rgba(0,0,0,.4); overflow-wrap: anywhere; }
+.term .p { color: var(--candle); }
+.term .d { color: var(--mist); }
+.term .g { color: var(--ok); }
+.watch { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * 1.3); }
+.watch li { padding-top: calc(var(--u) * 1); border-top: 1px solid var(--line); }
+.watch b { display: block; font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 1.8); }
+.watch span { font-size: calc(var(--u) * 1.3); line-height: 1.38; color: var(--mist); }
+
+/* ---------- slide: next ---------- */
+.next { display: grid; grid-template-columns: 1.2fr 1fr; gap: calc(var(--u) * 4); align-items: end; flex: 1; }
+.ideas { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * 1.2); align-self: start; }
+.ideas li { padding-top: calc(var(--u) * 1); border-top: 1px solid var(--line); font-size: calc(var(--u) * 1.4); line-height: 1.38; color: var(--mist); }
+.ideas b { display: block; font-family: var(--display); font-weight: 400; font-style: italic; font-size: calc(var(--u) * 1.9); color: var(--text); }
+.sign { font-family: var(--display); font-style: italic; font-size: calc(var(--u) * 5.6); line-height: 1; text-align: right; color: var(--text); text-shadow: 0 0 calc(var(--u) * 3) rgba(240,184,90,.35); }
+
+/* ---------- navigation ---------- */
+.nav { position: absolute; left: calc(var(--u) * 6); right: calc(var(--u) * 6); bottom: calc(var(--u) * 2); display: flex; align-items: center; gap: calc(var(--u) * 2); font-family: var(--label); font-size: calc(var(--u) * 1.15); letter-spacing: .1em; text-transform: uppercase; color: var(--mist); }
+.nav .track { flex: 1; height: 2px; background: var(--line); }
+.nav .fill { display: block; height: 100%; background: var(--candle); transform-origin: left; transform: scaleX(.09); transition: transform .35s ease; }
+.nav button { all: unset; cursor: pointer; width: calc(var(--u) * 2.8); height: calc(var(--u) * 2.8); display: grid; place-items: center; border: 1px solid var(--line); color: var(--text); }
+.nav button:hover { border-color: var(--candle); color: var(--candle); }
+.nav button:focus-visible { outline: 2px solid var(--candle); outline-offset: 2px; }
+.nav svg { width: 45%; height: 45%; }
+.nav .count { font-variant-numeric: tabular-nums; min-width: 6ch; text-align: center; }
+@media (prefers-reduced-motion: reduce) { .nav .fill { transition: none; } }
+
+/* ---------- phones and small windows: slides stack and scroll ---------- */
+@media (max-width: 760px) {
+  :root { --u: 10px; }
+  html, body { height: auto; }
+  .viewport { height: auto; display: block; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+  .stage { width: auto; aspect-ratio: auto; container-type: normal; overflow: visible; background: var(--night); }
+  .slide, .js .slide, .js .slide.is-active { position: relative; display: flex; inset: auto; padding: 36px 0; border-bottom: 1px solid var(--line); }
+  .nav { display: none; }
+  .display { font-size: 46px; }
+  .title { font-size: 31px; }
+  .title-slide { padding-top: 140px; padding-bottom: 36px; }
+  .candles { height: 130px; }
+  .split, .four, .match, .pack-wrap, .decisions, .demo, .next, .collisions { grid-template-columns: 1fr; gap: 24px; }
+  .sign { font-size: 52px; text-align: left; }
+  .out li { grid-template-columns: 1fr; gap: 0; }
+  .doc dl { grid-template-columns: 1fr; gap: 0; }
+  .doc dd { margin-bottom: 8px; }
+  .pack { font-size: 12px; }
+  .scrolls { grid-template-columns: 1fr; }
+  .lane .lib { font-size: 12px; }
+  .in .rank { font-size: 30px; }
+  .files .name { font-size: 13px; }
+  .term { font-size: 12px; }
+  figure { overflow-x: auto; display: block; flex: none; }
+  figure svg { min-width: 640px; height: auto; }
+  .small, figcaption { font-size: 13px; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="shield" viewBox="0 0 24 26">
+      <path d="M12 1.5 21.500 4.500v8.200c0 5.400-4.100 9.400-9.500 11.800C6.600 22.100 2.500 18.100 2.500 12.700V4.500z" fill="currentColor"/>
+    </symbol>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10z" fill="currentColor"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="viewport">
+<main class="stage" id="stage">
+
+  <!-- 1 · title -->
+  <section class="slide title-slide" aria-labelledby="t1">
+    <div class="candles" aria-hidden="true">
+      <i style="--x:9%;--top:6%;--h:7.5cqw;--d:-1s"></i>
+      <i style="--x:20%;--top:6%;--h:5cqw;--d:-3s"></i>
+      <i style="--x:33%;--top:9%;--h:8.5cqw;--d:-2s"></i>
+      <i style="--x:51%;--top:7%;--h:6cqw;--d:-4s"></i>
+      <i style="--x:66%;--top:8%;--h:7cqw;--d:-.5s"></i>
+      <i style="--x:79%;--top:5%;--h:5.5cqw;--d:-2.5s"></i>
+      <i style="--x:91%;--top:7%;--h:8cqw;--d:-3.5s"></i>
+    </div>
+    <p class="eyebrow">Anthropic basecamp · Option 3 · Specialist Swarm · Scenario Card C</p>
+    <h1 class="display" id="t1">The Hogwarts<br>Onboarding Swarm</h1>
+    <p class="lede">One intake parchment goes in. Four specialists work it in parallel. A Day-1 Readiness Pack comes out as a page you can open in a browser.</p>
+  </section>
+
+  <!-- 2 · problem -->
+  <section class="slide" aria-labelledby="t2">
+    <p class="eyebrow">The problem</p>
+    <h2 class="title" id="t2">Four lanes, one Monday</h2>
+    <p class="lede">A new Professor of Defence Against the Dark Arts starts on Mon 16 Nov. Recruiting, provisioning, the buddy and the welcome all have to be ready. Each lane looks fine on its own. The failures sit between them.</p>
+    <ul class="collisions">
+      <li>
+        <span class="lanes"><svg class="pip" style="color:var(--raven)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Recruiter <span class="sep">×</span> <svg class="pip" style="color:var(--huff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Provisioning</span>
+        <h3>The ledger sets the clock</h3>
+        <p>The Personnel Ledger says 23 November. Provisioning triggers off the ledger, so the Portkey would be filed after the Professor should already be in the castle.</p>
+      </li>
+      <li>
+        <span class="lanes"><svg class="pip" style="color:var(--huff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Provisioning <span class="sep">×</span> <svg class="pip" style="color:var(--slyth)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Welcome</span>
+        <h3>One Thursday, two deadlines</h3>
+        <p>Thu 5 Nov is the last day to file the Portkey and the last day to order the nut-free hamper. Different lanes, same morning.</p>
+      </li>
+      <li>
+        <span class="lanes"><svg class="pip" style="color:var(--raven)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Recruiter <span class="sep">×</span> <svg class="pip" style="color:var(--gryff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Buddy <span class="sep">×</span> <svg class="pip" style="color:var(--slyth)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg>Welcome</span>
+        <h3>Some facts must not travel</h3>
+        <p>The Recruiter knows the Professor is an unregistered Animagus. The buddy briefing and the welcome letter must never say so.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 3 · architecture -->
+  <section class="slide" aria-labelledby="t3">
+    <p class="eyebrow">The pattern</p>
+    <h2 class="title" id="t3">One Lead, four specialists, four libraries</h2>
+    <figure>
+      <svg viewBox="0 0 1000 430" role="img" aria-label="The intake goes to the Onboarding Lead, which briefs four specialists in parallel and receives a reply from each. The Lead then writes the Day-1 Readiness Pack. Each specialist carries its own reference library in its system prompt.">
+        <!-- intake -->
+        <rect class="fill-doc" x="14" y="175" width="164" height="90" rx="3"/>
+        <text class="ink" x="96" y="214" text-anchor="middle" font-size="15">Intake parchment</text>
+        <text class="ink m" x="96" y="237" text-anchor="middle" font-size="11">new-hire-profile.md</text>
+        <line x1="180" y1="220" x2="262" y2="220" stroke="currentColor" stroke-width="1.6" marker-end="url(#ah)"/>
+        <text x="221" y="208" text-anchor="middle" font-size="12" class="sub">verbatim</text>
+        <!-- lead -->
+        <rect class="fill-box" x="264" y="135" width="210" height="170" rx="4" style="stroke:var(--candle)"/>
+        <text x="369" y="188" text-anchor="middle" font-size="19" style="font-family:var(--display);font-style:italic">Onboarding Lead</text>
+        <text class="m sub" x="369" y="210" text-anchor="middle" font-size="11">claude-opus-5-5</text>
+        <text class="sub" x="369" y="241" text-anchor="middle" font-size="12.5">reads the intake</text>
+        <text class="sub" x="369" y="260" text-anchor="middle" font-size="12.5">briefs all four in one turn</text>
+        <text class="sub" x="369" y="279" text-anchor="middle" font-size="12.5">reconciles the lanes</text>
+        <!-- bus -->
+        <line x1="474" y1="220" x2="540" y2="220" stroke="currentColor" stroke-width="1.6"/>
+        <line x1="540" y1="56" x2="540" y2="356" stroke="currentColor" stroke-width="1.6"/>
+        <text x="540" y="20" text-anchor="middle" font-size="12" class="sub">parallel threads</text>
+        <!-- specialists: cy 56,156,256,356 -->
+        <g>
+          <line x1="540" y1="47" x2="612" y2="47" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+          <line x1="612" y1="65" x2="540" y2="65" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+          <line x1="540" y1="147" x2="612" y2="147" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+          <line x1="612" y1="165" x2="540" y2="165" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+          <line x1="540" y1="247" x2="612" y2="247" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+          <line x1="612" y1="265" x2="540" y2="265" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+          <line x1="540" y1="347" x2="612" y2="347" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+          <line x1="612" y1="365" x2="540" y2="365" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+        </g>
+        <text x="576" y="36" text-anchor="middle" font-size="11.5" class="sub">brief</text>
+        <text x="576" y="82" text-anchor="middle" font-size="11.5" class="sub">reply</text>
+
+        <rect class="fill-box" x="612" y="25" width="190" height="62" rx="3" style="stroke:var(--raven)"/>
+        <text x="707" y="52" text-anchor="middle" font-size="16" style="font-family:var(--display)">Recruiter</text>
+        <text class="m sub" x="707" y="72" text-anchor="middle" font-size="10.5">claude-sonnet-5-5</text>
+        <rect class="fill-box" x="612" y="125" width="190" height="62" rx="3" style="stroke:var(--huff)"/>
+        <text x="707" y="152" text-anchor="middle" font-size="16" style="font-family:var(--display)">Provisioning</text>
+        <text class="m sub" x="707" y="172" text-anchor="middle" font-size="10.5">claude-sonnet-5-5</text>
+        <rect class="fill-box" x="612" y="225" width="190" height="62" rx="3" style="stroke:var(--gryff)"/>
+        <text x="707" y="252" text-anchor="middle" font-size="16" style="font-family:var(--display)">Buddy Match</text>
+        <text class="m sub" x="707" y="272" text-anchor="middle" font-size="10.5">claude-sonnet-5-5</text>
+        <rect class="fill-box" x="612" y="325" width="190" height="62" rx="3" style="stroke:var(--slyth)"/>
+        <text x="707" y="352" text-anchor="middle" font-size="16" style="font-family:var(--display)">Welcome Packet</text>
+        <text class="m sub" x="707" y="372" text-anchor="middle" font-size="10.5">claude-sonnet-5-5</text>
+
+        <!-- libraries -->
+        <line x1="802" y1="56" x2="840" y2="56" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="802" y1="156" x2="840" y2="156" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="802" y1="256" x2="840" y2="256" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="802" y1="356" x2="840" y2="356" stroke="currentColor" stroke-width="1.2"/>
+        <rect class="fill-doc" x="840" y="34" width="146" height="44" rx="3"/>
+        <text class="ink" x="913" y="61" text-anchor="middle" font-size="13">Recruiting record</text>
+        <rect class="fill-doc" x="840" y="134" width="146" height="44" rx="3"/>
+        <text class="ink" x="913" y="161" text-anchor="middle" font-size="13">Provisioning catalog</text>
+        <rect class="fill-doc" x="840" y="234" width="146" height="44" rx="3"/>
+        <text class="ink" x="913" y="261" text-anchor="middle" font-size="13">Staff directory</text>
+        <rect class="fill-doc" x="840" y="334" width="146" height="44" rx="3"/>
+        <text class="ink" x="913" y="361" text-anchor="middle" font-size="13">Welcome kit</text>
+        <text x="913" y="404" text-anchor="middle" font-size="11.5" class="sub">each library sits in the</text>
+        <text x="913" y="419" text-anchor="middle" font-size="11.5" class="sub">specialist's system prompt</text>
+
+        <!-- output -->
+        <line x1="369" y1="305" x2="369" y2="343" stroke="currentColor" stroke-width="1.6" marker-end="url(#ah)"/>
+        <text x="381" y="329" font-size="12" class="sub">writes</text>
+        <rect class="fill-doc" x="264" y="345" width="210" height="66" rx="3"/>
+        <text class="ink" x="369" y="374" text-anchor="middle" font-size="15.5">Day-1 Readiness Pack</text>
+        <text class="ink m" x="369" y="395" text-anchor="middle" font-size="10.5">.html in /mnt/session/outputs</text>
+      </svg>
+      <figcaption>Solid arrows are briefs, dashed arrows are replies. The specialists never talk to each other. Every cross-lane judgement happens in the Lead.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 4 · intake -->
+  <section class="slide" aria-labelledby="t4">
+    <p class="eyebrow">The input</p>
+    <h2 class="title" id="t4">What the swarm receives</h2>
+    <div class="split">
+      <div class="doc">
+        <h3>New hire intake · Defence Against the Dark Arts</h3>
+        <dl>
+          <dt>Start</dt><dd>Monday 2026-11-16</dd>
+          <dt>Legal name</dt><dd>Bartholomew Oswin Fudgewick-Thorne</dd>
+          <dt>Preferred</dt><dd>Bram, they/them. No relation to Cornelius Fudge.</dd>
+          <dt>Coming from</dt><dd>Durmstrang Institute, a rival school</dd>
+          <dt>Disclosed skill</dt><dd>Can turn into a red squirrel</dd>
+          <dt>Dietary</dt><dd>Vegetarian. Severe tree-nut allergy.</dd>
+          <dt>Headmaster</dt><dd>Giving evidence at the Wizengamot, Mon and Tue</dd>
+          <dt>Accommodation</dt><dd><span class="redact" aria-hidden="true"></span> <span class="small" style="color:#6b3d12">restricted</span></dd>
+        </dl>
+      </div>
+      <div>
+        <p class="lede" style="margin-bottom:calc(var(--u)*1.6)">Five synthetic files. One is the trigger. The other four are the specialists' libraries.</p>
+        <ul class="files">
+          <li><svg class="pip" style="color:var(--candle)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg><span class="name">new-hire-profile.md</span><span class="role">The trigger. Sent to the Lead.</span></li>
+          <li><svg class="pip" style="color:var(--raven)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg><span class="name">offer-and-recruiting-record.md</span><span class="role">Recruiter</span></li>
+          <li><svg class="pip" style="color:var(--huff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg><span class="name">it-provisioning-catalog.md</span><span class="role">Provisioning</span></li>
+          <li><svg class="pip" style="color:var(--gryff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg><span class="name">employee-directory.json</span><span class="role">Buddy Match, 13 staff</span></li>
+          <li><svg class="pip" style="color:var(--slyth)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/></svg><span class="name">company-welcome-kit.md</span><span class="role">Welcome Packet</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · four lanes -->
+  <section class="slide" aria-labelledby="t5">
+    <p class="eyebrow">The specialists</p>
+    <h2 class="title" id="t5">Four lanes, four Houses</h2>
+    <div class="four">
+      <article class="lane" style="--c:var(--raven)">
+        <h3><svg class="crest" style="color:var(--raven)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/><text class="letter" x="12" y="16.500" text-anchor="middle">R</text></svg>Recruiter</h3>
+        <p class="q">Can Bram start on Monday?</p>
+        <p class="own">Compares the signed offer with the Personnel Ledger, tracks Ministry checks and owl references, and opens with READY, AT RISK or BLOCKED.</p>
+        <p class="reply"><span>Replies with</span>A verdict, the offer set against the ledger, open checks and an action list.</p>
+        <p class="lib">offer-and-recruiting-record.md</p>
+      </article>
+      <article class="lane" style="--c:var(--huff)">
+        <h3><svg class="crest" style="color:var(--huff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/><text class="letter" x="12" y="16.500" text-anchor="middle">P</text></svg>Provisioning</h3>
+        <p class="q">Will the castle be ready?</p>
+        <p class="own">Plans the arrival, the equipment and the access, with a date on each, and flags rules that would make a date slip.</p>
+        <p class="reply"><span>Replies with</span>A verdict, the arrival plan, equipment with dates, and access by day.</p>
+        <p class="lib">it-provisioning-catalog.md</p>
+      </article>
+      <article class="lane" style="--c:var(--gryff)">
+        <h3><svg class="crest" style="color:var(--gryff)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/><text class="letter" x="12" y="16.500" text-anchor="middle">B</text></svg>Buddy Match</h3>
+        <p class="q">Who guides Bram for 90 days?</p>
+        <p class="own">Applies the Staff Mentor Scheme rules to all 13 staff, names a primary and a backup, and explains every rejection.</p>
+        <p class="reply"><span>Replies with</span>A primary and a backup, then every other name with the rule that decided it.</p>
+        <p class="lib">employee-directory.json</p>
+      </article>
+      <article class="lane" style="--c:var(--slyth)">
+        <h3><svg class="crest" style="color:var(--slyth)" viewBox="0 0 24 26" aria-hidden="true"><use href="#shield"/><text class="letter" x="12" y="16.500" text-anchor="middle">W</text></svg>Welcome Packet</h3>
+        <p class="q">What does Bram read and eat in week one?</p>
+        <p class="own">Writes the letter and the timetable, finds a stand-in host where one is away, and checks the hamper against the diet.</p>
+        <p class="reply"><span>Replies with</span>A forwardable letter, the week-one timetable, the hamper order and a never-say list.</p>
+        <p class="lib">company-welcome-kit.md</p>
+      </article>
+    </div>
+    <p class="small" style="margin-top:auto">Each specialist replies once, in 500 words or fewer. The Lead runs on claude-opus-5-5 and the specialists on claude-sonnet-5-5.</p>
+  </section>
+
+  <!-- 6 · portkey clock -->
+  <section class="slide" aria-labelledby="t6">
+    <p class="eyebrow">What only the Lead can see</p>
+    <h2 class="title" id="t6">A one-day miss that no single lane can see</h2>
+    <figure>
+      <svg viewBox="0 40 1000 360" role="img" aria-label="Timeline of business days from Thursday 5 November to Monday 16 November. A Portkey filed by hand on Thursday 5 is ready on Thursday 12, in time for the arrival deadline. A Portkey filed by ledger automation on Friday 6 is ready on Friday 13, one day late.">
+        <!-- deadline and start -->
+        <line x1="670" y1="108" x2="670" y2="330" stroke="var(--candle)" stroke-width="1.6" stroke-dasharray="6 5"/>
+        <text x="670" y="66" text-anchor="middle" font-size="15" style="fill:var(--candle)">Arrive by Thu 12</text>
+        <text x="670" y="86" text-anchor="middle" font-size="12" class="sub">wards need 48 hours to attune</text>
+        <line x1="898" y1="108" x2="898" y2="330" stroke="currentColor" stroke-width="1.4"/>
+        <text x="898" y="66" text-anchor="middle" font-size="15">Mon 16</text>
+        <text x="898" y="86" text-anchor="middle" font-size="12" class="sub">first day</text>
+
+        <!-- row A -->
+        <text x="100" y="134" font-size="14">Filed by hand on Thu 5</text>
+        <rect x="100" y="144" width="570" height="26" fill="var(--ok)"/>
+        <text x="385" y="162" text-anchor="middle" font-size="13" style="fill:var(--night);font-weight:700">5 business days</text>
+        <text x="684" y="162" font-size="14" style="fill:var(--ok)">Ready Thu 12, in time</text>
+
+        <!-- row B -->
+        <text x="214" y="209" font-size="14">Filed by ledger automation on Fri 6</text>
+        <rect x="214" y="219" width="570" height="26" fill="var(--bad)"/>
+        <text x="499" y="237" text-anchor="middle" font-size="13" style="fill:var(--night);font-weight:700">5 business days</text>
+        <text x="796" y="237" font-size="14" style="fill:var(--bad)">Ready Fri 13</text>
+        <text x="796" y="256" font-size="14" style="fill:var(--bad)">one day late</text>
+
+        <!-- row C -->
+        <path d="M100 280 l7 7 -7 7 -7 -7z" fill="var(--candle)"/>
+        <text x="116" y="292" font-size="13.5">Same morning: last day to order the nut-free hamper</text>
+
+        <!-- axis -->
+        <line x1="60" y1="330" x2="940" y2="330" stroke="currentColor" stroke-width="1.4"/>
+        <g stroke="currentColor" stroke-width="1.4">
+          <line x1="100" y1="324" x2="100" y2="336"/><line x1="214" y1="324" x2="214" y2="336"/>
+          <line x1="328" y1="324" x2="328" y2="336"/><line x1="442" y1="324" x2="442" y2="336"/>
+          <line x1="556" y1="324" x2="556" y2="336"/><line x1="670" y1="324" x2="670" y2="336"/>
+          <line x1="784" y1="324" x2="784" y2="336"/><line x1="898" y1="324" x2="898" y2="336"/>
+        </g>
+        <g stroke="currentColor" stroke-width="1.2">
+          <line x1="265" y1="322" x2="277" y2="338"/><line x1="271" y1="322" x2="283" y2="338"/>
+          <line x1="835" y1="322" x2="847" y2="338"/><line x1="841" y1="322" x2="853" y2="338"/>
+        </g>
+        <g font-size="13.5" text-anchor="middle">
+          <text x="100" y="356">Thu 5</text><text x="214" y="356">Fri 6</text><text x="328" y="356">Mon 9</text><text x="442" y="356">Tue 10</text>
+          <text x="556" y="356">Wed 11</text><text x="670" y="356">Thu 12</text><text x="784" y="356">Fri 13</text><text x="898" y="356">Mon 16</text>
+        </g>
+        <g font-size="12" text-anchor="middle" class="m sub">
+          <text x="100" y="376">T-7</text><text x="214" y="376">T-6</text><text x="328" y="376">T-5</text><text x="442" y="376">T-4</text>
+          <text x="556" y="376">T-3</text><text x="670" y="376">T-2</text><text x="784" y="376">T-1</text><text x="898" y="376">start</text>
+        </g>
+      </svg>
+      <figcaption>Business days only. A Portkey takes 5 business days from a complete application, and the Professor must be in the castle 2 business days before the start. The Recruiter's ledger error moves the trigger, the Provisioning catalog fixes the lead time, and only the Lead sees both.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 7 · buddy match -->
+  <section class="slide" aria-labelledby="t7">
+    <p class="eyebrow">The rules, applied mechanically</p>
+    <h2 class="title" id="t7">Thirteen staff, four eligible</h2>
+    <div class="match">
+      <div>
+        <h3>Ruled out · 9</h3>
+        <ul class="out">
+          <li><span class="who">Albus Dumbledore</span><span class="why">the manager, grade 9</span></li>
+          <li><span class="who">Minerva McGonagall</span><span class="why">grade gap of 3</span></li>
+          <li><span class="who">Severus Snape</span><span class="why">refused this post 11 times</span></li>
+          <li><span class="who">Rubeus Hagrid</span><span class="why">already has two charges</span></li>
+          <li><span class="who">Gilderoy Lockhart</span><span class="why">at St Mungo's all year</span></li>
+          <li><span class="who">Filius Flitwick</span><span class="why">away for 15 working days</span></li>
+          <li><span class="who">Firenze</span><span class="why">works 20:00 to 04:00</span></li>
+          <li><span class="who">Cuthbert Binns</span><span class="why">2 hours of overlap</span></li>
+          <li><span class="who">Peeves</span><span class="why">not on the payroll</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Eligible, ranked · 4</h3>
+        <ol class="in" style="list-style:none">
+          <li><span class="rank">1</span><span class="who">Remus Lupin<span class="tag">PRIMARY</span></span><span class="stat">3 minutes' walk · rating 5.0</span></li>
+          <li><span class="rank">2</span><span class="who">Pomona Sprout<span class="tag">BACKUP</span></span><span class="stat">14 minutes' walk · rating 4.9</span></li>
+          <li><span class="rank">3</span><span class="who">Horace Slughorn</span><span class="stat">22 minutes' walk · rating 4.2</span></li>
+          <li><span class="rank">4</span><span class="who">Sybill Trelawney</span><span class="stat">31 minutes' walk · rating 2.1</span></li>
+        </ol>
+        <p class="small rule">All four share the new hire's department, so the walk to the classroom decides the order. The expected answer from the directory's rules.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · the pack -->
+  <section class="slide" aria-labelledby="t8">
+    <p class="eyebrow">The output</p>
+    <h2 class="title" id="t8">A Day-1 Readiness Pack you can open anywhere</h2>
+    <div class="pack-wrap">
+      <div class="doc pack" role="img" aria-label="Layout of the readiness pack: a masthead with a wax seal, a blockers list, a House Cup of four bars, four scrolls and a footer.">
+        <header>
+          <div><div class="school">Hogwarts · Staff Affairs</div><div class="pt">Day-1 Readiness Pack</div></div>
+          <div class="seal">verdict<br>for<br>Monday</div>
+        </header>
+        <div><h4>Blockers before Monday</h4><div class="bl"><span></span><span></span><span></span></div></div>
+        <div>
+          <h4>The House Cup</h4>
+          <div class="cup">
+            <div><span>Recruiter</span><i class="bar" style="--w:55%;--c:var(--raven)"></i></div>
+            <div><span>Provisioning</span><i class="bar" style="--w:40%;--c:#c9a419"></i></div>
+            <div><span>Buddy Match</span><i class="bar" style="--w:90%;--c:#b4352c"></i></div>
+            <div><span>Welcome Packet</span><i class="bar" style="--w:70%;--c:#2f8f61"></i></div>
+          </div>
+        </div>
+        <div class="scrolls">
+          <div style="--c:var(--raven)"><b>Recruiter</b><em>Staff Affairs only</em></div>
+          <div style="--c:#c9a419"><b>Provisioning</b><em>Staff Affairs only</em></div>
+          <div style="--c:#b4352c"><b>Buddy Match</b><em>Shareable</em></div>
+          <div style="--c:#2f8f61"><b>Welcome</b><em>Shareable</em></div>
+        </div>
+        <footer>Mischief managed.</footer>
+      </div>
+      <ul class="ann">
+        <li><b>A verdict on a wax seal</b><span>READY, AT RISK or BLOCKED for the start date. Never colour alone.</span></li>
+        <li><b>Blockers, by deadline</b><span>Each has an owner, a date and the cost of missing it. Cross-lane clashes are flagged.</span></li>
+        <li><b>The House Cup</b><span>One readiness score per lane out of 100, with the reason underneath.</span></li>
+        <li><b>One file, no network</b><span>Inline CSS and SVG only, so it opens offline and survives being forwarded.</span></li>
+        <li><span class="note">The pack on the left shows the layout the Lead is told to build. The scores and tags are placeholders.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 · decisions -->
+  <section class="slide" aria-labelledby="t9">
+    <p class="eyebrow">Design decisions</p>
+    <h2 class="title" id="t9">Six choices that make it behave</h2>
+    <ul class="decisions">
+      <li><h3>Each specialist owns its library</h3><p>The Lead briefs and does not relay policy, so nothing is paraphrased on the way. Re-running the setup script refreshes the libraries.</p></li>
+      <li><h3>Dates are computed, never recalled</h3><p>Every agent has to run bash for business-day arithmetic. The Portkey clock is exactly the kind of thing a model gets wrong in its head.</p></li>
+      <li><h3>The Lead can call four agents</h3><p>Inline agents and workflows are switched off. The roster is the team, and spend cannot fan out.</p></li>
+      <li><h3>Restricted details have a rule</h3><p>The accommodation is only ever "quarters and classroom setup". Every scroll is tagged Staff Affairs only or Shareable.</p></li>
+      <li><h3>A spend ceiling and a safe re-run</h3><p>The session stops at $15 of list cost. The setup script updates agents in place instead of piling up copies.</p></li>
+      <li><h3>HTML instead of a Word file</h3><p>The agents write the page straight into the session's outputs folder. No document skill is needed, and the theme is just CSS.</p></li>
+    </ul>
+  </section>
+
+  <!-- 10 · demo -->
+  <section class="slide" aria-labelledby="t10">
+    <p class="eyebrow">The demo</p>
+    <h2 class="title" id="t10">Two screens: the event stream and the pack</h2>
+    <div class="demo">
+      <div>
+        <div class="term" role="img" aria-label="Terminal showing the two commands and the shape of the event stream: four thread-spawned lines, replies, then the swarm finished line.">
+<span class="p">$</span> python create_onboarding_swarm.py<br>
+<span class="p">$</span> python run_onboarding.py<br>
+<span class="d">=== EVENT STREAM ===</span><br>
+&nbsp;&nbsp;[thread spawned]&nbsp;&nbsp;&nbsp;Recruiter<br>
+&nbsp;&nbsp;[thread spawned]&nbsp;&nbsp;&nbsp;Provisioning<br>
+&nbsp;&nbsp;[thread spawned]&nbsp;&nbsp;&nbsp;Buddy Match<br>
+&nbsp;&nbsp;[thread spawned]&nbsp;&nbsp;&nbsp;Welcome Packet<br>
+&nbsp;&nbsp;[tool: bash]<br>
+&nbsp;&nbsp;[reply ←]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provisioning<br>
+<span class="g">[swarm finished]</span><br>
+<span class="p">$</span> open outputs/day-1-readiness-pack.html
+        </div>
+        <p class="small" style="margin-top:calc(var(--u)*1)">Line format taken from run_onboarding.py. The order of replies will vary.</p>
+      </div>
+      <ul class="watch">
+        <li><b>Four threads in seconds</b><span>The four "thread spawned" lines land almost together. That is the parallelism.</span></li>
+        <li><b>The bash calls</b><span>Each one is an agent checking a date or a rule instead of guessing.</span></li>
+        <li><b>The pack in the browser</b><span>Open it beside the terminal. Check the blockers against the traps on the earlier slides.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 · next -->
+  <section class="slide" aria-labelledby="t11">
+    <p class="eyebrow">Where it goes next</p>
+    <h2 class="title" id="t11">Stretch goals for this swarm</h2>
+    <div class="next">
+      <ul class="ideas">
+        <li><b>A Critic that can say STOP</b>If a blocker cannot be cleared by Monday, the Critic holds the pack and says so.</li>
+        <li><b>A registry behind an MCP</b>Replace the staff directory file with a lookup the Buddy Match agent queries.</li>
+        <li><b>Memory across hires</b>Remember how the last Defence Against the Dark Arts hire fared, and which buddy lasted.</li>
+        <li><b>A Hogwarts voice skill</b>Move the welcome kit's tone rules into a skill any lane can use.</li>
+      </ul>
+      <div class="sign">Mischief managed.</div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Slide navigation">
+    <span>Hogwarts Onboarding Swarm</span>
+    <span class="track"><span class="fill" id="fill"></span></span>
+    <button type="button" id="prev" aria-label="Previous slide"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M7 1 3 5l4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+    <span class="count" id="count" aria-live="polite">01 / 11</span>
+    <button type="button" id="next" aria-label="Next slide"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="m3 1 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+  </nav>
+</main>
+</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var count = document.getElementById('count');
+  var fill = document.getElementById('fill');
+  var i = 0;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function go(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, k) { s.classList.toggle('is-active', k === i); });
+    count.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+    fill.style.transform = 'scaleX(' + ((i + 1) / slides.length) + ')';
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+  document.documentElement.classList.add('js');
+  var start = parseInt((location.hash || '').slice(1), 10);
+  go(isNaN(start) ? 0 : start - 1);
+  document.getElementById('prev').addEventListener('click', function () { go(i - 1); });
+  document.getElementById('next').addEventListener('click', function () { go(i + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (k === 'Home') { go(0); }
+    else if (k === 'End') { go(slides.length - 1); }
+  });
+})();
+</script>
