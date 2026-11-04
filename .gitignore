@@ -1,0 +1,11 @@
+.env
+.venv/
+.state.json
+.*_id
+.*_ids.json
+.last_session_id
+runs/
+outputs/
+__pycache__/
+*.pyc
+.pytest_cache/
