@@ -1,0 +1,23 @@
+# Fixture rubric used only by eval/tests -- validates the yardstick, not the swarm.
+# Fictional hire "Alex Kim" (not one of the real synthetic-data profiles).
+profile: fixture-alex-kim
+expected_verdict: AT_RISK
+required_headings:
+  - Readiness Verdict
+  - Blockers
+  - Day-1 Checklist
+  - Welcome Letter
+items:
+  - {id: verdict-at-risk, lane: coordinator, description: "Overall verdict is AT RISK or NOT READY because the work permit is pending", check: regex, pattern: "verdict[^\\n]{0,40}(AT RISK|NOT READY)", weight: 3, critical: true}
+  - {id: verdict-not-fully-ready, lane: coordinator, description: "Does not declare the hire READY", check: regex_absent, pattern: "verdict:\\s*READY\\b", weight: 3, critical: true}
+  - {id: third-reference-due, lane: recruiter, description: "Third reference flagged with a due date", check: regex, pattern: "reference[^\\n]{0,60}(due|by) 2026-", weight: 2, critical: false}
+  - {id: above-band-flagged, lane: recruiter, description: "Above-band offer flagged for VP approval", check: regex, pattern: "above[ -]band[^\\n]{0,80}VP", weight: 2, critical: false}
+  - {id: laptop-standard, lane: it, description: "Day-1 laptop is the standard MacBook", check: regex, pattern: "MacBook", weight: 2, critical: false}
+  - {id: prod-access-not-day1, lane: it, description: "Production data access is not granted on day 1", check: regex_absent, pattern: "production[^\\n]{0,40}access[^\\n]{0,20}granted[^\\n]{0,15}day[ -]?1\\b", weight: 3, critical: true}
+  - {id: buddy-correct, lane: buddy, description: "Primary buddy is Sam Ortiz", check: regex, pattern: "buddy[^\\n]{0,40}Sam Ortiz", weight: 3, critical: true}
+  - {id: buddy-not-manager, lane: buddy, description: "Buddy is not the hire's manager Dana Lee", check: regex_absent, pattern: "buddy[^\\n]{0,30}Dana Lee", weight: 3, critical: true}
+  - {id: letter-no-leak, lane: welcome, description: "Hire-facing text does not leak visa or salary details", check: regex_absent, pattern: "\\bvisa\\b|salary of", weight: 3, critical: true}
+  - {id: letter-start-date, lane: welcome, description: "Welcome letter states the start date", check: regex, pattern: "2026-12-07|7 December 2026|December 7", weight: 1, critical: false}
+  - {id: no-placeholders, lane: coordinator, description: "No placeholder text", check: regex_absent, pattern: "TODO|lorem|\\[insert", weight: 1, critical: false}
+  - {id: checklist-owners, lane: coordinator, description: "Every checklist item has an owner and a due date", check: judge, pattern: null, weight: 2, critical: false}
+  - {id: letter-warm, lane: welcome, description: "Welcome letter is personal and warm, addressed to Alex by name", check: judge, pattern: null, weight: 1, critical: false}
