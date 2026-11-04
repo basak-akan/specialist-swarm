@@ -1,0 +1,17 @@
+I've read the intake. Key points: start Monday 2026-11-16; preferred name Bram (they/them); the Headmaster is unavailable Mon 16 and Tue 17 Nov; Bram leaves Durmstrang on Fri 13 Nov from Gate Zero, and no arrival method has been decided; no Broom Exception form has been filed; there is a restricted accommodation case. Delegating to all four specialists now.All four specialists are briefed and running in parallel: Recruiter, Provisioning, Buddy Match and Welcome Packet. Each has the full intake word for word. Once all four have reported, I'll reconcile their findings, check every date with bash and build the pack.Provisioning has reported BLOCKED at 38/100. The most urgent item is the Portkey, which must be filed Thursday 2026-11-05 and needs the Headmaster's written ward authorisation. Bram's last day at Durmstrang is also a day after the latest arrival date. I'm waiting for Recruiter, Buddy Match and Welcome Packet before reconciling.Recruiter has reported AT RISK at 45/100. Bram must file the Animagus registration (Form IUM-7) by Friday 2026-11-06, and the Personnel Ledger is wrong on five fields.
+
+Two of those Ledger errors affect Provisioning's work:
+- **Start date:** the Ledger has 2026-11-23, and Provisioning's automatic orders run off the Ledger date.
+- **Work location:** "Hogsmeade Village" would send the Portkey outside the castle wards.
+
+Both feed into the cross-lane blockers. I'm waiting for Buddy Match and Welcome Packet.Buddy Match recommends Remus Lupin, with Pomona Sprout as backup covering Lupin's leave from Monday 23 to Wednesday 25 November. Both are free on Day 1 and Day 2, while the Headmaster is away. The buddy briefing it sent is safe to share. It didn't give a score, so I'll set one myself. I'm waiting for Welcome Packet.**Verdict: BLOCKED.** A clean start on Monday 16 November is still possible, but only if three things are settled by Thursday 5 November.
+
+Top three blockers:
+1. **Wednesday 4 November (today):** Staff Affairs confirms the quarters and classroom setup. At the 8-business-day lead time it may still not be ready when Bram arrives on Thursday 12 November.
+2. **Thursday 5 November:** Provisioning files the Gate Zero Portkey, which is the only way in. The Headmaster must sign the ward authorisation that day. Durmstrang must release Bram a day early, because they have to arrive by Thursday 12 November and their last day there is Friday 13 November.
+3. **Friday 6 November:** Bram must have filed the Animagus registration (Form IUM-7), and the Personnel Ledger must be corrected.
+
+The pack passed the checks: it parses, has no web links, and none of the restricted case details appear.
+
+Files are in /mnt/session/outputs:
+- day-1-readiness-pack.html

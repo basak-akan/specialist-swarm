@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day-1 Readiness Pack: Bram, Professor of Defence Against the Dark Arts</title>
+<style>
+:root{
+  --page:#efe0b8; --sheet:#f6ecd0; --ink:#2b1a0c; --muted:#4d3820;
+  --rav:#0e1a40; --rav2:#946b2d;
+  --huf:#4a3f35; --huf2:#c99a12;
+  --gry:#740001; --gry2:#b8860b;
+  --sly:#1a472a; --sly2:#7d8185;
+  --blocked:#7a1010; --risk:#6b4300; --ready:#1d4a26;
+}
+*{box-sizing:border-box}
+html{background:var(--page)}
+body{
+  margin:0; color:var(--ink);
+  font:17px/1.6 'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  background:
+    radial-gradient(ellipse at center, rgba(239,224,184,0) 55%, rgba(120,84,30,.28) 100%),
+    var(--page);
+  min-height:100vh; padding:24px 12px;
+  box-shadow: inset 0 0 90px rgba(92,58,18,.45);
+}
+h1,h2,h3,h4{
+  font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  font-variant:small-caps; letter-spacing:.06em; line-height:1.25; margin:0 0 .5em;
+}
+h1{font-size:2.1rem}
+h2{font-size:1.45rem; border-bottom:2px solid var(--ink); padding-bottom:.15em}
+h3{font-size:1.15rem; margin-top:1.1em}
+.sheet{
+  max-width:880px; margin:0 auto; background:var(--sheet);
+  border:4px double var(--ink); padding:28px 32px;
+  box-shadow:0 6px 24px rgba(60,35,10,.35);
+}
+p{margin:.4em 0 .8em}
+small,.small{font-size:.85rem}
+.tag{
+  display:inline-block; font-variant:small-caps; letter-spacing:.08em; font-size:.82rem;
+  border:1.5px solid var(--ink); padding:0 .55em; border-radius:3px; margin-left:.4em;
+  vertical-align:middle; background:var(--sheet); color:var(--ink); font-weight:bold;
+}
+.tag.share{border-style:dashed}
+/* masthead */
+header.mast{text-align:center; border-bottom:4px double var(--ink); padding-bottom:18px; margin-bottom:22px}
+header.mast svg.sky{width:100%; height:auto; display:block}
+.school{font-variant:small-caps; letter-spacing:.2em; font-size:1rem; margin:.6em 0 .1em}
+.who{margin:.3em 0}
+.mast-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:22px}
+.seal{width:132px; height:132px; flex:0 0 auto}
+.seal.sm{width:62px; height:62px}
+/* sections */
+section{margin:0 0 30px; break-inside:avoid; page-break-inside:avoid}
+ol.blockers{padding-left:1.6em}
+ol.blockers li{margin-bottom:.9em; padding-left:.2em}
+ol.blockers .what{font-weight:bold}
+.meta{font-size:.92rem}
+.xlane{font-variant:small-caps; letter-spacing:.06em; font-weight:bold; border:1px solid var(--ink); padding:0 .35em; font-size:.8rem}
+.tbl{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:.4em 0 1em}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.93rem}
+th,td{border:1px solid rgba(43,26,12,.45); padding:.35em .55em; text-align:left; vertical-align:top}
+th{font-variant:small-caps; letter-spacing:.05em; background:rgba(43,26,12,.07)}
+/* house cup */
+.cup{display:grid; gap:14px}
+.bar-row{display:grid; grid-template-columns:150px 1fr 110px; gap:12px; align-items:center}
+.bar-name{font-variant:small-caps; letter-spacing:.06em; font-weight:bold}
+.glass{position:relative; height:26px; border:2px solid var(--ink); border-radius:13px; background:#fbf5e3; overflow:hidden}
+.glass::before,.glass::after{content:""; position:absolute; top:0; bottom:0; width:0; border-left:2px solid var(--ink)}
+.glass::before{left:50%}
+.sand{height:100%}
+.bar-reason{grid-column:1 / -1; font-size:.92rem; margin-top:-6px}
+.word{font-variant:small-caps; letter-spacing:.08em; font-weight:bold; border:2px solid; padding:0 .4em; text-align:center; border-radius:3px}
+.w-blocked{color:var(--blocked); border-color:var(--blocked)}
+.w-risk{color:var(--risk); border-color:var(--risk)}
+.w-ready{color:var(--ready); border-color:var(--ready)}
+/* scrolls */
+.scroll{border-left:8px solid; padding:6px 0 6px 20px; position:relative}
+.scroll-head{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:.4em}
+.scroll-head h2{border-bottom-width:3px; margin:0; flex:1 1 auto}
+.crest{width:44px; height:52px; flex:0 0 auto}
+.rav{border-left-color:var(--rav)} .rav h2{color:var(--rav); border-bottom-color:var(--rav2)}
+.huf{border-left-color:var(--huf)} .huf h2{color:var(--huf); border-bottom-color:var(--huf2)}
+.gry{border-left-color:var(--gry)} .gry h2{color:var(--gry); border-bottom-color:var(--gry2)}
+.sly{border-left-color:var(--sly)} .sly h2{color:var(--sly); border-bottom-color:var(--sly2)}
+.panel{border:2px solid var(--ink); padding:10px 16px; margin:1em 0; background:rgba(43,26,12,.04)}
+.letter{border:1px solid rgba(43,26,12,.5); padding:12px 18px; background:#fbf5e3; font-style:normal}
+ul{padding-left:1.3em}
+footer{border-top:4px double var(--ink); padding-top:14px; text-align:center; font-size:.95rem}
+footer .oath{font-style:italic; margin-top:.6em}
+@media (max-width:600px){
+  .sheet{padding:18px 14px}
+  .bar-row{grid-template-columns:1fr 90px}
+  .bar-row .glass{grid-column:1 / -1; grid-row:2}
+  h1{font-size:1.6rem}
+}
+@media (prefers-reduced-motion: no-preference){
+  .flame{transform-origin:50% 100%; transform-box:fill-box; animation:flicker 2.6s ease-in-out infinite alternate}
+  .flame.f2{animation-duration:3.3s; animation-delay:-1.1s}
+  @keyframes flicker{
+    0%{transform:scale(1,1) rotate(-2deg); opacity:.95}
+    40%{transform:scale(.93,1.06) rotate(2deg); opacity:1}
+    70%{transform:scale(1.04,.95) rotate(-1deg); opacity:.9}
+    100%{transform:scale(.97,1.03) rotate(1.5deg); opacity:1}
+  }
+}
+@media print{
+  html,body{background:#f6ecd0 !important; box-shadow:none !important}
+  .sheet{box-shadow:none; border:3px double #2b1a0c}
+  section,.panel,.scroll,table{break-inside:avoid; page-break-inside:avoid}
+  .tbl{overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header class="mast">
+  <svg class="sky" viewBox="0 0 800 170" role="img" aria-label="Castle skyline at dusk with lit windows and two floating candles">
+    <defs>
+      <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e9d6a6"/><stop offset="1" stop-color="#d9bf86"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#ffe9a8" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="800" height="170" fill="url(#dusk)"/>
+    <path fill="#2b1a0c" d="M0 170 V140 L60 128 L120 136 L150 120 V96 L158 80 L166 96 V120 L190 120 V70 L200 48 L210 70 V120 L240 118 V100 H252 V92 H264 V100 H276 V118 L300 116 V60 L312 30 L324 60 V116 L350 112 V84 H360 V76 H372 V84 H382 V112 L400 110 V40 L414 8 L428 40 V110 L450 112 V78 L462 56 L474 78 V112 L500 114 V92 H512 V84 H524 V92 H536 V114 L560 116 V66 L571 44 L582 66 V118 L610 120 V96 L618 82 L626 96 V124 L680 132 L740 126 L800 138 V170 Z"/>
+    <g fill="#f2c24a">
+      <rect x="196" y="82" width="7" height="11" rx="3"/><rect x="309" y="70" width="7" height="12" rx="3"/>
+      <rect x="410" y="52" width="8" height="13" rx="3"/><rect x="410" y="80" width="8" height="13" rx="3"/>
+      <rect x="459" y="86" width="7" height="11" rx="3"/><rect x="567" y="78" width="7" height="11" rx="3"/>
+      <rect x="356" y="94" width="6" height="9" rx="2"/>
+    </g>
+    <g>
+      <circle cx="110" cy="36" r="22" fill="url(#glow)"/>
+      <rect x="104" y="40" width="12" height="38" rx="2" fill="#fbf3dc" stroke="#2b1a0c" stroke-width="1.5"/>
+      <line x1="110" y1="40" x2="110" y2="35" stroke="#2b1a0c" stroke-width="1.5"/>
+      <path class="flame" d="M110 18 C116 26 116 33 110 35 C104 33 104 26 110 18 Z" fill="#e8a317" stroke="#8a4b05" stroke-width="1"/>
+      <circle cx="690" cy="50" r="22" fill="url(#glow)"/>
+      <rect x="684" y="54" width="12" height="34" rx="2" fill="#fbf3dc" stroke="#2b1a0c" stroke-width="1.5"/>
+      <line x1="690" y1="54" x2="690" y2="49" stroke="#2b1a0c" stroke-width="1.5"/>
+      <path class="flame f2" d="M690 32 C696 40 696 47 690 49 C684 47 684 40 690 32 Z" fill="#e8a317" stroke="#8a4b05" stroke-width="1"/>
+    </g>
+  </svg>
+  <div class="mast-row">
+    <div>
+      <p class="school">Hogwarts School of Witchcraft and Wizardry</p>
+      <h1>Day-1 Readiness Pack</h1>
+      <p class="who"><strong>Bram</strong> (they/them) · Professor of Defence Against the Dark Arts · Grade 5 (Professor)</p>
+      <p class="who">Start date: <strong>Monday 16 November 2026</strong> · Pack issued Wednesday 4 November 2026</p>
+    </div>
+    <svg class="seal" viewBox="0 0 140 140" role="img" aria-label="Overall verdict seal: BLOCKED">
+      <defs>
+        <radialGradient id="wax" cx="40%" cy="35%" r="70%">
+          <stop offset="0" stop-color="#b52a2a"/><stop offset=".65" stop-color="#7a1010"/><stop offset="1" stop-color="#4d0707"/>
+        </radialGradient>
+      </defs>
+      <path d="M70 4 C84 6 92 2 102 10 C114 14 122 22 128 34 C136 44 134 56 136 70 C134 84 138 94 128 106 C122 118 112 126 100 130 C88 136 80 134 70 136 C56 134 46 138 36 130 C24 124 14 116 10 104 C4 92 6 82 4 70 C6 56 2 46 10 34 C16 22 26 14 38 10 C48 4 58 6 70 4 Z" fill="url(#wax)"/>
+      <circle cx="70" cy="70" r="50" fill="none" stroke="#4d0707" stroke-width="4"/>
+      <circle cx="70" cy="70" r="46" fill="none" stroke="#d98a8a" stroke-width="1.5" stroke-opacity=".7"/>
+      <text x="70" y="64" text-anchor="middle" font-family="'Palatino Linotype',Palatino,Georgia,serif" font-size="11" fill="#ffffff" letter-spacing="1.5">VERDICT</text>
+      <text x="70" y="84" text-anchor="middle" font-family="'Palatino Linotype',Palatino,Georgia,serif" font-size="18" font-weight="bold" fill="#ffffff" letter-spacing="1">BLOCKED</text>
+    </svg>
+  </div>
+  <p class="small">Verdict: <strong>BLOCKED</strong> as things stand. A clean start on Monday 16 November remains possible only if the Portkey, ward authorisation and Durmstrang release are settled by Thursday 5 November.</p>
+</header>
+
+<main>
+
+<section id="blockers" aria-labelledby="h-blockers">
+  <h2 id="h-blockers">Blockers before Monday <span class="tag">Staff Affairs only</span></h2>
+  <p class="small">Ordered by deadline, earliest first. Items marked <span class="xlane">cross-lane</span> were found by setting one lane's findings against another's.</p>
+  <ol class="blockers">
+    <li><span class="what">Confirm the quarters and classroom setup with Facilities.</span> <span class="xlane">cross-lane</span><br>
+      Why: lead time is 5 to 8 business days from Staff Affairs' confirmation. Confirmed today, the 8-day case ends Monday 16 November, after Bram must be in the castle (Thursday 12 November). The hamper delivery and the Wednesday classroom handover both depend on it. Details held by Staff Affairs.<br>
+      <span class="meta">Owner: Wilhelmina Quillfeather (Staff Affairs) · Deadline: <strong>Wednesday 4 November 2026</strong>, end of day · Lanes: Provisioning, Welcome</span></li>
+    <li><span class="what">Bram files Form IUM-7 (Ministry registration item).</span><br>
+      Why: this check must be clear before the start, with no exceptions. Filed today, it completes Wednesday 11 November. Filed on the hard stop, it completes Friday 13 November. Filed on Monday 9 November, it completes on Day 1, which is too late.<br>
+      <span class="meta">Owner: Bram, chased by Gilbert Inkwell · Deadline: today, Wednesday 4 November 2026; hard stop <strong>Friday 6 November 2026</strong> · Lane: Recruiter</span></li>
+    <li><span class="what">File the Portkey from Gate Zero, with the Headmaster's written ward authorisation and the destination set by hand inside the wards.</span> <span class="xlane">cross-lane</span><br>
+      Why: it is the only route in. There is no Floo, the Express does not run mid-term, and Apparition is impossible. Authorisation takes 5 business days, so filing on Thursday 5 November gives Thursday 12 November, the last permitted arrival date (T-2 for ward attunement). There is zero slack. The Ledger's automatic filing on Friday 6 November would be a day late. The Ledger work location ("Hogsmeade Village") would also land Bram outside the wards.<br>
+      <span class="meta">Owner: Provisioning (filing) and the Headmaster (signature) · Deadline: <strong>Thursday 5 November 2026</strong> · Lanes: Provisioning, Recruiter</span></li>
+    <li><span class="what">Ask Durmstrang to release Bram one day early.</span> <span class="xlane">cross-lane</span><br>
+      Why: Bram's last day at Durmstrang is Friday 13 November, but they must arrive by Thursday 12 November. The Catalogue allows no exception to the T-2 rule. Without the release, the Portkey date and the start date cannot both be met.<br>
+      <span class="meta">Owner: Staff Affairs, with the Headmaster · Deadline: <strong>Thursday 5 November 2026</strong>, so that the Portkey can be filed for that date · Lanes: Provisioning, Recruiter</span></li>
+    <li><span class="what">Order the allergen-aware welcome hamper.</span><br>
+      Why: T-7 order deadline. A standard hamper would be unsafe for Bram. The order is in the Staff Affairs panel in the Welcome scroll.<br>
+      <span class="meta">Owner: Staff Affairs · Deadline: <strong>Thursday 5 November 2026</strong> · Lane: Welcome</span></li>
+    <li><span class="what">Start Ministry registration of the interim CS7 broom.</span> <span class="xlane">cross-lane</span><br>
+      Why: the Firebolt Supreme cannot arrive before Friday 20 November even if approved today. Tuesday's 13:00 broom induction on the welcome timetable must therefore use the CS7, and registration takes 2 days.<br>
+      <span class="meta">Owner: Provisioning · Deadline: <strong>Thursday 5 November 2026</strong> · Lanes: Provisioning, Welcome</span></li>
+    <li><span class="what">Correct the Personnel Ledger: preferred name, work location, start date, contract term and base salary.</span> <span class="xlane">cross-lane</span><br>
+      Why: the Ledger drives Provisioning. With the preferred name blank, the owl alias would be built from the legal name. With the start date wrong (23 November), the automatic orders and the St Mungo's cover would run a week late. With the location wrong, the Portkey would target Hogsmeade. The salary is entered in Sickles.<br>
+      <span class="meta">Owner: Gilbert Inkwell · Deadline: <strong>Friday 6 November 2026</strong>, before the T-6 automatic filing · Lanes: Recruiter, Provisioning, Welcome</span></li>
+    <li><span class="what">Enter the sign-on bonus in the Ledger.</span><br>
+      Why: otherwise it misses the first Gringotts payroll run.<br>
+      <span class="meta">Owner: Gilbert Inkwell · Deadline: <strong>Monday 9 November 2026</strong> · Lane: Recruiter</span></li>
+    <li><span class="what">Bram supplies a second employment document for the Grimble &amp; Grue's verification.</span><br>
+      Why: this check also blocks the start. The Pensieve route would finish on Wednesday 18 November, which is too late. Staff Affairs needs 2 business days to approve, so approval would land Friday 13 November.<br>
+      <span class="meta">Owner: Bram; approval by Staff Affairs · Deadline: <strong>Wednesday 11 November 2026</strong> · Lane: Recruiter</span></li>
+    <li><span class="what">The Headmaster signs REC-22 (deferral of the outstanding reference).</span> <span class="xlane">cross-lane</span><br>
+      Why: without it, the missing reference would block the start. The Headmaster is at the Wizengamot on Monday 16 and Tuesday 17 November, so he must sign before then.<br>
+      <span class="meta">Owner: Headmaster · Deadline: <strong>Friday 13 November 2026</strong> · Lane: Recruiter</span></li>
+    <li><span class="what">Confirm Remus Lupin's working days for week one.</span><br>
+      Why: Monday at 14:00 and Thursday at 10:00 on the timetable depend on the buddy. His part-time pattern is not on file.<br>
+      <span class="meta">Owner: Onboarding Lead · Deadline: <strong>Friday 13 November 2026</strong> · Lanes: Buddy Match, Welcome</span></li>
+    <li><span class="what">Bram signs UV-114 (an ordinary witnessed oath) and completes permit IMC-9&frac34; Part 1.</span><br>
+      Why: both are needed by Day 1. No access beyond the base bundle is granted until UV-114 is signed.<br>
+      <span class="meta">Owner: Bram, witnessed by Staff Affairs · Deadline: <strong>Monday 16 November 2026</strong> · Lanes: Recruiter, Provisioning</span></li>
+  </ol>
+</section>
+
+<section id="cup" aria-labelledby="h-cup">
+  <h2 id="h-cup">The House Cup <span class="tag">Staff Affairs only</span></h2>
+  <div class="cup">
+    <div class="bar-row">
+      <span class="bar-name" style="color:var(--rav)">Recruiter</span>
+      <div class="glass" role="img" aria-label="Recruiter 45 out of 100"><div class="sand" style="width:45%;background:linear-gradient(90deg,var(--rav),var(--rav2))"></div></div>
+      <span class="word w-risk">AT RISK · 45</span>
+      <span class="bar-reason">Two Ministry checks are open and each blocks the start. Both can still close in time. The Ledger is wrong in five fields.</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name" style="color:var(--huf)">Provisioning</span>
+      <div class="glass" role="img" aria-label="Provisioning 38 out of 100"><div class="sand" style="width:38%;background:linear-gradient(90deg,var(--huf),var(--huf2))"></div></div>
+      <span class="word w-blocked">BLOCKED · 38</span>
+      <span class="bar-reason">The Portkey has zero slack, the ward authorisation is not on file, and the arrival date falls before Bram's release from Durmstrang.</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name" style="color:var(--gry)">Buddy Match</span>
+      <div class="glass" role="img" aria-label="Buddy Match 85 out of 100"><div class="sand" style="width:85%;background:linear-gradient(90deg,var(--gry),var(--gry2))"></div></div>
+      <span class="word w-ready">READY · 85</span>
+      <span class="bar-reason">Buddy and backup both pass every rule and are free on Days 1 and 2. Only the buddy's part-time days are left to confirm.</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name" style="color:var(--sly)">Welcome</span>
+      <div class="glass" role="img" aria-label="Welcome 65 out of 100"><div class="sand" style="width:65%;background:linear-gradient(90deg,var(--sly),var(--sly2))"></div></div>
+      <span class="word w-risk">AT RISK · 65</span>
+      <span class="bar-reason">Letter and timetable are drafted. The hamper must be ordered by Thursday 5 November, and Monday depends on the arrival plan.</span>
+    </div>
+  </div>
+  <p class="small">How the scores were set: Recruiter, Provisioning and Welcome scored their own lanes against their reference libraries. Buddy Match gave no score, so the Onboarding Lead set it on the same basis.</p>
+</section>
+
+<!-- RECRUITER -->
+<section class="scroll rav" id="recruiter" aria-labelledby="h-rec">
+  <div class="scroll-head">
+    <svg class="crest" viewBox="0 0 44 52" aria-hidden="true"><path d="M4 4 H40 V24 C40 38 30 46 22 50 C14 46 4 38 4 24 Z" fill="#0e1a40" stroke="#946b2d" stroke-width="3"/><text x="22" y="32" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="bold" fill="#ffffff">R</text></svg>
+    <h2 id="h-rec">Recruiter: Offer, Checks and Ledger</h2>
+    <span class="tag">Staff Affairs only</span>
+  </div>
+  <p>Seal: <span class="word w-risk">AT RISK</span>. The signed offer parchment is the source of truth, and the Ledger must match it. Legal name (for the Ledger and Ministry only): Bartholomew Oswin Fudgewick-Thorne. The legal name already matches.</p>
+  <h3>Offer parchment against Personnel Ledger</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Field</th><th>Correct (offer)</th><th>Ledger now</th><th>If left wrong</th></tr></thead>
+    <tbody>
+      <tr><td>Preferred name</td><td>Bram</td><td>blank</td><td>Badge, owl alias and timetable are generated from the legal name.</td></tr>
+      <tr><td>Work location</td><td>Hogwarts Castle</td><td>Hogsmeade Village</td><td>Provisioning and the Portkey target the wrong site.</td></tr>
+      <tr><td>Start date</td><td>Monday 16 November 2026</td><td>23 November 2026</td><td>Automatic orders, the payroll cut-off and the St Mungo's cover run a week late.</td></tr>
+      <tr><td>Contract term</td><td>One academic year to Wednesday 30 June 2027, Rider 14b</td><td>Permanent</td><td>The Ledger contradicts the signed contract.</td></tr>
+      <tr><td>Base salary</td><td>4,200 Galleons (band 3,800 to 4,800)</td><td>4,200 Sickles</td><td>The first payslip is about 3,953 Galleons short.</td></tr>
+      <tr><td>Sign-on bonus</td><td>250 Galleons after 30 days; Rider 14b repayment exception</td><td>not entered</td><td>It misses the first Gringotts run.</td></tr>
+      <tr><td>Target bonus</td><td>15% of base, conditional on a 90% mock NEWT pass rate</td><td>15%, no condition</td><td>The condition is missing from the Ledger extract. Confirm where it is held.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Ministry checks and references</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Status</th><th>Blocks start?</th><th>Route</th></tr></thead>
+    <tbody>
+      <tr><td>Animagus Registry (disclosed form, 2019)</td><td>Open, not registered</td><td>Yes</td><td>IUM-7, 5 business days</td></tr>
+      <tr><td>Grimble &amp; Grue's employment verification</td><td>Open, one document held (2019 Tax Scroll)</td><td>Yes</td><td>A second document: a Gringotts payslip or vault statement, or a living supervisor's statement. Ghost signatures are not accepted.</td></tr>
+      <tr><td>Owl reference 3 (Grimble)</td><td>Two owls undelivered</td><td>No, if REC-22 is signed</td><td>Due Monday 30 November 2026</td></tr>
+      <tr><td>Work permit IMC-9&frac34;</td><td>Not started</td><td>No</td><td>Part 1 Monday 16 November; book by Tuesday 17 November; Part 2 Thursday 19 November</td></tr>
+      <tr><td>UV-114 (rival-school hire)</td><td>Unsigned</td><td>Needed by Day 1</td><td>Ordinary witnessed oath. Unbreakable Vows are not permitted.</td></tr>
+      <tr><td>Wand Registry transfer</td><td>Not started</td><td>No</td><td>Start-date task; owner to be confirmed</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Actions</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Owner</th><th>Action</th><th>Deadline</th></tr></thead>
+    <tbody>
+      <tr><td>Bram</td><td>File IUM-7</td><td>Wednesday 4 November 2026 (hard stop Friday 6 November)</td></tr>
+      <tr><td>Gilbert Inkwell</td><td>Correct all Ledger fields above; book the Ministry permit appointment</td><td>Friday 6 November 2026</td></tr>
+      <tr><td>Gilbert Inkwell</td><td>Enter the sign-on bonus</td><td>Monday 9 November 2026</td></tr>
+      <tr><td>Bram</td><td>Supply the second Grimble &amp; Grue's document</td><td>Wednesday 11 November 2026</td></tr>
+      <tr><td>Staff Affairs</td><td>Approve the verification</td><td>Friday 13 November 2026</td></tr>
+      <tr><td>Headmaster</td><td>Sign REC-22</td><td>Friday 13 November 2026</td></tr>
+      <tr><td>Bram</td><td>Send the Gringotts vault number and the Staff Handbook acknowledgement (proposed date)</td><td>Friday 13 November 2026</td></tr>
+      <tr><td>Bram</td><td>Sign UV-114; complete permit Part 1</td><td>Monday 16 November 2026</td></tr>
+      <tr><td>Gilbert Inkwell</td><td>Chase reference 3</td><td>Monday 30 November 2026</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- PROVISIONING -->
+<section class="scroll huf" id="provisioning" aria-labelledby="h-prov">
+  <div class="scroll-head">
+    <svg class="crest" viewBox="0 0 44 52" aria-hidden="true"><path d="M4 4 H40 V24 C40 38 30 46 22 50 C14 46 4 38 4 24 Z" fill="#4a3f35" stroke="#c99a12" stroke-width="3"/><text x="22" y="32" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="bold" fill="#ffffff">P</text></svg>
+    <h2 id="h-prov">Provisioning: Arrival, Kit and Access</h2>
+    <span class="tag">Staff Affairs only</span>
+  </div>
+  <p>Seal: <span class="word w-blocked">BLOCKED</span>. Bram must be inside the wards by <strong>Thursday 12 November 2026</strong> (T-2, for ward attunement).</p>
+  <h3>Arrival route</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Route</th><th>Verdict</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>Hogwarts Express</td><td>No</td><td>It does not run mid-term.</td></tr>
+      <tr><td>Floo</td><td>No</td><td>A new connection takes 10 business days, so Wednesday 18 November at the earliest.</td></tr>
+      <tr><td>Apparition</td><td>No</td><td>It is impossible within the grounds.</td></tr>
+      <tr><td>Portkey, Gate Zero to inside the wards</td><td>Only route</td><td>File Thursday 5 November; authorised Thursday 12 November. The destination must be set by hand. It needs the Headmaster's written ward authorisation.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Issue</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Lead time</th><th>Date</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Firebolt Supreme (BROOM-FBS)</td><td>12 business days from BR-9 approval</td><td>Friday 20 November 2026 at the earliest</td><td>No BR-9 has been filed. A nod and a sherbet lemon do not count as approval. Day-1 delivery was lost on Thursday 29 October.</td></tr>
+      <tr><td>Interim broom (BROOM-CS7)</td><td>1 day, plus 2 days Ministry registration</td><td>Register by Thursday 5 November; issue by Thursday 12 November</td><td>Returned within 14 days of the swap</td></tr>
+      <tr><td>Robes (ROBE-STD), 40 long</td><td>3 business days</td><td>Order Friday 6 November; ready Wednesday 11 November</td><td>Confirm with Madam Malkin's that "40 long" counts as measurements</td></tr>
+      <tr><td>DADA kit (KIT-DADA)</td><td>2 business days, in stock</td><td>Issue by Friday 13 November 2026</td><td></td></tr>
+      <tr><td>Cauldron (CAULD-2), barn owl (OWL-BARN)</td><td>In stock</td><td>By Thursday 12 November 2026</td><td>Standard issue</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Arrange and enable</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>What</th><th>Date</th><th>Condition</th></tr></thead>
+    <tbody>
+      <tr><td>Owl address bram.fudgewick-thorne</td><td>Wednesday 11 November 2026 (T-3)</td><td>Only if the Ledger's preferred-name field reads "Bram". Otherwise a rename takes 2 days plus a Name-Change Charm.</td></tr>
+      <tr><td>Base access bundle</td><td>Monday 16 November 2026</td><td>Trunk inspection on arrival; cursed items declared on DAD-3</td></tr>
+      <tr><td>Role bundle</td><td>After Scroll Safety 101, due Friday 20 November 2026</td><td>UV-114 signed first</td></tr>
+      <tr><td>Restricted Section</td><td>Wednesday 25 November 2026 at the earliest</td><td>Librarian's signature, 3 days</td></tr>
+      <tr><td>Quarters and classroom setup</td><td>5 to 8 business days from confirmation</td><td>Not yet confirmed. Details held by Staff Affairs.</td></tr>
+      <tr><td>Ministry induction travel (Tuesday 8 to Thursday 10 December)</td><td>Book by Tuesday 17 November 2026</td><td>If by Portkey, file by Friday 27 November 2026 at the latest</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Not provisionable on any request: Time-Turner, Pensieve, Marauder's Map, Room of Requirement. The relocation allowance (600 Galleons) is claimed after the start date.</p>
+  <h3>Actions</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Owner</th><th>Action</th><th>Deadline</th></tr></thead>
+    <tbody>
+      <tr><td>Headmaster</td><td>Sign the written ward authorisation for the Portkey destination</td><td>Thursday 5 November 2026</td></tr>
+      <tr><td>Provisioning</td><td>File the Portkey by hand (do not wait for the Ledger automatic filing); start CS7 registration</td><td>Thursday 5 November 2026</td></tr>
+      <tr><td>Staff Affairs</td><td>Agree an early release with Durmstrang so that Bram can travel on Thursday 12 November</td><td>Thursday 5 November 2026</td></tr>
+      <tr><td>Provisioning</td><td>Order robes; confirm the measurements</td><td>Friday 6 November 2026</td></tr>
+      <tr><td>Headmaster</td><td>File BR-9 for the Firebolt Supreme, if still wanted</td><td>Friday 13 November 2026 (delivery after Day 1 regardless)</td></tr>
+      <tr><td>Staff Affairs</td><td>Book Ministry induction travel</td><td>Tuesday 17 November 2026</td></tr>
+      <tr><td>Staff Affairs</td><td>Name an owner and lead time for the Wand Registry transfer (not covered by the Catalogue)</td><td>Friday 13 November 2026</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- BUDDY -->
+<section class="scroll gry" id="buddy" aria-labelledby="h-buddy">
+  <div class="scroll-head">
+    <svg class="crest" viewBox="0 0 44 52" aria-hidden="true"><path d="M4 4 H40 V24 C40 38 30 46 22 50 C14 46 4 38 4 24 Z" fill="#740001" stroke="#b8860b" stroke-width="3"/><text x="22" y="32" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="bold" fill="#ffffff">B</text></svg>
+    <h2 id="h-buddy">Buddy Match: Buddy and Backup</h2>
+    <span class="tag share">Shareable</span>
+  </div>
+  <p>Seal: <span class="word w-ready">READY</span>. Matched under the Staff Mentor Scheme rules.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Role</th><th>Colleague</th><th>Why</th><th>Away</th></tr></thead>
+    <tbody>
+      <tr><td>Buddy</td><td>Professor Remus Lupin</td><td>Passes every scheme rule; same grade; shortest walk (3 minutes); held this post in 1993–94; two shared interests</td><td>Monday 23 to Wednesday 25 November 2026</td></tr>
+      <tr><td>Backup</td><td>Professor Pomona Sprout</td><td>Passes every scheme rule; same faculty; 14-minute walk; longest tenure</td><td>None in the window</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Other colleagues were considered and not matched under the scheme's rules: grade gap, reporting line, existing buddy load, leave in the window or too few overlapping hours. Professor Slughorn and Professor Trelawney were eligible but ranked lower.</p>
+  <h3>Buddy briefing</h3>
+  <ul>
+    <li>Bram (they/them) starts on Monday 16 November 2026 as Professor of Defence Against the Dark Arts.</li>
+    <li>Bram works owl-first and prefers written messages. No Howlers, please.</li>
+    <li>Interests: wizard's chess, Gobstones, Chocolate Frog cards, Snorkack spotting, baking.</li>
+    <li>Bram has dietary needs, so please check with them before sharing food.</li>
+    <li>Bram would like a guide who understands this post.</li>
+    <li>The Headmaster is unavailable on Monday 16 and Tuesday 17 November, so please lead the Day-1 welcome. Quarters and classroom setup are handled by Provisioning.</li>
+  </ul>
+  <h3>Availability</h3>
+  <ul>
+    <li>Both colleagues are free on Monday 16 and Tuesday 17 November, and during the Ministry induction (Tuesday 8 to Thursday 10 December).</li>
+    <li>Professor Sprout covers Professor Lupin's leave from Monday 23 to Wednesday 25 November.</li>
+  </ul>
+  <h3>Actions</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Owner</th><th>Action</th><th>Deadline</th></tr></thead>
+    <tbody>
+      <tr><td>Onboarding Lead</td><td>Confirm Professor Lupin's working days for Monday 16 to Friday 20 November</td><td>Friday 13 November 2026</td></tr>
+      <tr><td>Onboarding Lead</td><td>Brief Professor Sprout as standby for Monday 23 to Wednesday 25 November</td><td>Friday 13 November 2026</td></tr>
+      <tr><td>Onboarding Lead</td><td>Send both colleagues this briefing by owl</td><td>Friday 6 November 2026</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- WELCOME -->
+<section class="scroll sly" id="welcome" aria-labelledby="h-wel">
+  <div class="scroll-head">
+    <svg class="crest" viewBox="0 0 44 52" aria-hidden="true"><path d="M4 4 H40 V24 C40 38 30 46 22 50 C14 46 4 38 4 24 Z" fill="#1a472a" stroke="#7d8185" stroke-width="3"/><text x="22" y="32" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="bold" fill="#ffffff">W</text></svg>
+    <h2 id="h-wel">Welcome: Letter, First Week and Hamper</h2>
+    <span class="tag share">Shareable</span>
+  </div>
+  <p>Seal: <span class="word w-risk">AT RISK</span>. The letter and timetable may be forwarded. The hamper panel at the foot of this scroll may not.</p>
+  <h3>Welcome letter</h3>
+  <div class="letter">
+    <p>Dear Bram,</p>
+    <p>Welcome to Hogwarts. We are glad you are joining us as Professor of Defence Against the Dark Arts on Monday 16 November.</p>
+    <p>Breakfast in the Great Hall is at 07:30 Bell Time (GMT). The Sorting Hat's career advice that morning is optional and not binding. Professor Lupin will be your buddy, and Professor Sprout is on hand when he is away.</p>
+    <p>We are arranging your quarters and classroom setup, and your welcome hamper is being prepared with your dietary needs in mind. We will write rather than send Howlers. If anything changes, owl <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="691a1d080f0f080f0f08001b1a2901060e1e081b1d1a470c11080419050c">[email&#160;protected]</a>.</p>
+    <p>Staff Affairs Office</p>
+  </div>
+  <h3>First week (Bell Time, GMT)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Day</th><th>Time</th><th>Session</th><th>Host</th><th>Depends on</th></tr></thead>
+    <tbody>
+      <tr><td>Monday 16 November</td><td>07:30</td><td>Breakfast; optional Sorting Hat</td><td>Staff Affairs</td><td>Arrival plan</td></tr>
+      <tr><td>Monday 16 November</td><td>09:00</td><td>Welcome and grounds tour</td><td>Staff Affairs</td><td></td></tr>
+      <tr><td>Monday 16 November</td><td>10:30</td><td>Castle orientation</td><td>Caretaker</td><td></td></tr>
+      <tr><td>Monday 16 November</td><td>12:00</td><td>Lunch</td><td>Deputy Headmistress (standing in for the Headmaster)</td><td></td></tr>
+      <tr><td>Monday 16 November</td><td>14:00</td><td>Meet your buddy</td><td>Professor Lupin</td><td>Buddy's working days</td></tr>
+      <tr><td>Monday 16 November</td><td>15:00</td><td>Scroll Safety 101</td><td>Provisioning</td><td></td></tr>
+      <tr><td>Tuesday 17 November</td><td>10:00</td><td>Founders' Briefing</td><td>Professor Binns</td><td></td></tr>
+      <tr><td>Tuesday 17 November</td><td>13:00</td><td>Wand Registry and broom induction (interim broom)</td><td>Provisioning</td><td>Interim broom registration</td></tr>
+      <tr><td>Wednesday 18 November</td><td>12:00</td><td>High Table lunch</td><td>Deputy Headmistress</td><td></td></tr>
+      <tr><td>Wednesday 18 November</td><td>14:00</td><td>Classroom handover and boggart cabinet inventory</td><td>Caretaker</td><td>Quarters and classroom setup</td></tr>
+      <tr><td>Thursday 19 November</td><td>10:00</td><td>Observe a lesson</td><td>Professor Lupin</td><td>Buddy's working days</td></tr>
+      <tr><td>Friday 20 November</td><td>15:00</td><td>Week-one review and dinner</td><td>Headmaster</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <h3>Dates ahead</h3>
+  <ul>
+    <li>Day 10 (Wednesday 25 November): full Defence timetable taken over.</li>
+    <li>Day 20 (Saturday 5 December): Duelling Club relaunched.</li>
+    <li>Tuesday 8 to Thursday 10 December: Ministry new-staff induction.</li>
+    <li>Day 30 (Tuesday 15 December): mock NEWT review.</li>
+    <li>Wednesday 16 December: St Mungo's enrolment closes.</li>
+  </ul>
+  <h3>Actions</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Owner</th><th>Action</th><th>Deadline</th></tr></thead>
+    <tbody>
+      <tr><td>Staff Affairs</td><td>Order the welcome hamper (see the panel below)</td><td>Thursday 5 November 2026</td></tr>
+      <tr><td>Staff Affairs</td><td>Last day to move any session by up to 2 hours</td><td>Wednesday 11 November 2026</td></tr>
+      <tr><td>Staff Affairs</td><td>Send the welcome letter by owl once the arrival plan is confirmed</td><td>Friday 6 November 2026</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="panel" aria-labelledby="h-hamper">
+    <h3 id="h-hamper">Hamper order <span class="tag">Staff Affairs only</span></h3>
+    <p class="small">Do not forward this panel with the letter or the timetable.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Dietary</td><td>Vegetarian. Severe tree-nut allergy.</td></tr>
+        <tr><td>Hamper</td><td>The allergen-aware hamper</td></tr>
+        <tr><td>Remove</td><td>Chocolate Frogs and Cauldron Cakes (tree nuts); Pumpkin Pasties and Bertie Bott's Beans (not vegetarian)</td></tr>
+        <tr><td>Keep</td><td>Sugar Quills, Fizzing Whizzbees, scarf, quills (no blood quills), notebook</td></tr>
+        <tr><td>Check</td><td>The mug touches food and has no allergen data. Confirm before dispatch.</td></tr>
+        <tr><td>Order by</td><td>Thursday 5 November 2026 (T-7)</td></tr>
+        <tr><td>Dispatch</td><td>Monday 9 November 2026 (assumed T-5; the kit gives no date for allergen hampers)</td></tr>
+        <tr><td>Delivery</td><td>By owl, to the address in the confidential quarters record, not the room named on the intake</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="handling" aria-labelledby="h-hand">
+  <h2 id="h-hand">Handling notes <span class="tag">Staff Affairs only</span></h2>
+  <ul>
+    <li>You may forward the Buddy Match scroll and the Welcome letter and timetable to Bram, the buddy, the backup and session hosts. Remove the hamper panel first.</li>
+    <li>Do not forward the blockers list, the House Cup, the Recruiter scroll or the Provisioning scroll outside Staff Affairs. They hold pay, Ministry check status and the arrival arrangements.</li>
+    <li>Everywhere else, the accommodation is "quarters and classroom setup". Details held by Staff Affairs.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Prepared by the Onboarding Lead, Deputy Headmistress's Office, for the start date Monday 16 November 2026.</p>
+  <p class="oath">I solemnly swear that I am up to no good. Mischief managed.</p>
+</footer>
+
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>

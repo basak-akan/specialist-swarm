@@ -1,0 +1,25 @@
+RFP read. Classic bake-off: Microsoft-shop manufacturer, Azure-first, Power BI is sacred, 280TB growing, big EU residency requirement, and they're aiming the RFP at Databricks, Snowflake, Fabric, and us. Commercial and legal asks are aggressive (35% off, Net 90, MFN, uncapped liability, unannounced audits, 99.99% with termination-for-any-SLA-breach, full IP vesting). Several of these are flat-out non-starters that need skilled counter-positioning, not refusal. Delegating all four specialists in parallel now.All four briefs out. Waiting on specialist returns before I synthesise and draft the branded docx.Competitive read in. Strong. Waiting on the other three.Legal in. Clean, decisive, and gives me the counter-language I need. Two more pending.Tech fit in. Clear, honest, and the Teradata/burst-sizing and multi-region active-active framing give me real material to work with. Pricing specialist still out.All four in. Now I need to check what docx tooling is actually available before I write the final response.No branding skill or dedicated docx skill package — python-docx is installed and that's what I'll use. I'll build the branded response with a visual identity that reads as "BTS-Synthetic" (deep navy + accent). Writing the full synthesis now.Doc built cleanly: 9 tables, cover page, running header/footer, matrix, commercial, contract, implementation, and risks — all intact. Deliverable is at `/mnt/session/outputs/BTS-Synthetic_Proposal_Acme-Corp.docx`.
+
+## Summary of the deal position I took
+
+**The specialists all agreed on the shape of the deal; I had one real judgement call to make.**
+
+- **Pricing** recommended 25% headline (floor 28%) vs. Acme's 35% ask, with structured levers (Year-1 ramp, $150K migration credit, deferred ML tier) to give Acme visible value without moving the headline rate. I took this straight.
+- **Legal** flagged five walk-aways in §4 plus the §3.5 termination-for-convenience and §3.4 MFN. I used their counter-text verbatim in §4 of the response, including the Stark Industries IP precedent for §4.4.
+- **Technical Fit** confirmed "strong fit with one caveat" — 99.99% SLA needs multi-region active-active. **One judgement call here:** Pricing said bake the $100K SLA cost into the base; Tech agreed it's doable. I committed to including it in the base price rather than quoting it as an add-on — this neutralises an evaluation-criteria gotcha and makes our TCO cleanly comparable.
+- **Competitive Intel** correctly identified Microsoft Fabric as a political head-fake, not the real technical threat. I used Initech Sensors (same industry, beat Fabric Nov 2025) as the lead reference and positioned the deal around open formats + per-table residency + real-time at scale, not generic differentiation.
+
+## Key numbers in the proposal
+
+- **$1.65M/yr net ACV** (25% off $2.2M list), 3+2 term, Years 1–3 fixed, Years 4–5 capped at CPI/3%
+- **~$8.4M 5-year TCO** (for their TCO matrix in evaluation criterion §5)
+- **Year-1 billed at $1.32M** (80% ramp) + $150K migration credit
+- **99.99% SLA included** in base via multi-region active-active (EU primary, US East secondary)
+- **Net 45** payment terms (counter to Net 90)
+- **MFN scoped** to >$1M ACV, 3+ year, comparable-workload only, initial term only
+
+## What I did NOT concede
+
+Uncapped liability, reputational damages, unannounced audits, full IP vesting, sole-discretion subprocessor veto, unconditional MFN, 30-day termination-for-convenience with no breakage, and fully flat 5-year pricing. All seven of these are called out in §4 of the response with explicit counter-text, each framed as a term comparable enterprise customers have accepted.
+
+The proposal is ready to go to Sarah Chen and Marcus Webb.
