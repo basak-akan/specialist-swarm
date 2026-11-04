@@ -9,7 +9,7 @@ DATA_FILES = ["new-hire-profile.md", "offer-and-recruiting-record.md", "it-provi
               "company-welcome-kit.md", "employee-directory.json"]
 CRITIC = os.environ.get("HW_CRITIC", "1") == "1"
 PPTX = os.environ.get("HW_PPTX", "1") == "1"
-BUDGET_USD = os.environ.get("HW_BUDGET_USD", "15.00")
+BUDGET_CENTS = os.environ.get("HW_BUDGET_CENTS", "1500")  # minor units: "1500" = $15.00
 COORD_MODEL = os.environ.get("HW_COORD_MODEL", "claude-opus-5-5")
 SPEC_MODEL = os.environ.get("HW_SPEC_MODEL", "claude-sonnet-5-5")
 

@@ -15,6 +15,21 @@ def text_of(content):
     return "".join(getattr(b, "text", "") or "" for b in (content or []))
 
 
+def download_outputs(c, session_id, out_dir, tries=6):
+    """Download agent-generated files. Mounted inputs are listed too but are not downloadable."""
+    out_dir = Path(out_dir); out_dir.mkdir(parents=True, exist_ok=True)
+    for _ in range(tries):
+        outs = [f for f in c.beta.files.list(scope_id=session_id, betas=BETA) if getattr(f, "downloadable", False)]
+        if any(f.filename.endswith(".docx") for f in outs): break
+        time.sleep(3)
+    for f in outs:
+        try:
+            c.beta.files.download(f.id).write_to_file(str(out_dir / f.filename)); print("downloaded", f.filename)
+        except Exception as e:
+            print("skip", f.filename, type(e).__name__)
+    return outs
+
+
 def main():
     c = make_client()
     st = json.loads(Path(".state.json").read_text())
@@ -29,7 +44,7 @@ def main():
     session = c.beta.sessions.create(
         agent=st["agents"]["coordinator"], environment_id=st["environment_id"], resources=resources,
         title=C.PREFIX + "Day-1 readiness pack", metadata={"project": C.PROJECT},
-        budget={"type": "limit", "max_list_cost": {"amount": C.BUDGET_USD, "currency": "USD"}})
+        budget={"type": "limit", "max_list_cost": {"amount": C.BUDGET_CENTS, "currency": "USD"}})
     (run / "config.json").write_text(json.dumps({
         "session_id": session.id, "profile": "bram", "agents": st["agents"],
         "models": {"coordinator": C.COORD_MODEL, "specialists": C.SPEC_MODEL},
@@ -71,17 +86,11 @@ def main():
         if th.parent_thread_id is None: continue
         name = getattr(th.agent, "name", None) or th.agent.type
         finals = [text_of(e.content) for e in c.beta.sessions.threads.events.list(th.id, session_id=session.id) if e.type == "agent.message"]
-        (run / "threads" / f"{name.replace(C.PREFIX, '').replace('/', '-')}.md").write_text(finals[-1] if finals else "")
+        (run / "threads" / f"{name.replace(C.PREFIX, '').replace('/', '-')}.md").write_text("\n\n".join(t for t in finals if t))
 
     s = c.beta.sessions.retrieve(session.id)
     (run / "usage.json").write_text(json.dumps(s.usage.model_dump(mode="json"), indent=2))
-    for _ in range(6):
-        files = list(c.beta.files.list(scope_id=session.id, betas=BETA))
-        outs = [f for f in files if f.filename.endswith((".docx", ".pptx", ".md", ".pdf"))]
-        if any(f.filename.endswith(".docx") for f in outs): break
-        time.sleep(3)
-    for f in outs:
-        c.beta.files.download(f.id).write_to_file(str(run / "outputs" / f.filename)); print("downloaded", f.filename)
+    download_outputs(c, session.id, run / "outputs")
     print(f"\nrun dir: {run}   cost: {s.usage.list_cost}")
     if "--no-eval" not in sys.argv and Path("eval/score_run.py").exists():
         subprocess.run([sys.executable, "eval/score_run.py", str(run)])
